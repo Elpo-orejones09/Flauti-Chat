@@ -1,0 +1,7 @@
+{
+  "name": "flauti-chat",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
