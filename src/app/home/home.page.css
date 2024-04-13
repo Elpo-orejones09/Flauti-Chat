@@ -1,5 +1,31 @@
 header{
-  background: #5b0072;
+  background: #120010;
   position: fixed;
+  display: flex;
+  flex-direction: row;
+  
   top: 0;
+  width: 100%;
+  height: 80px;
+  justify-content: space-between;
+  align-items: center;
+}
+ 
+.fotoPerfil{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  border: 2px solid #000000;
+  background-color: white;
+}
+
+.logo{
+  width: 80px;
+  height: 80px;
+}
+
+header input{
+  width: 400px;
+  height: 30px;
+  border-radius: 30px;
 }
