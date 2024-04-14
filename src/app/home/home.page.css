@@ -9,9 +9,11 @@ header{
   height: 80px;
   justify-content: space-between;
   align-items: center;
+  z-index: 999;
 }
  
 .fotoPerfil{
+  margin-right: 30px;
   width: 70px;
   height: 70px;
   border-radius: 50%;
@@ -20,8 +22,25 @@ header{
 }
 
 .logo{
+  margin-left: 30px;
   width: 80px;
   height: 80px;
+}
+
+.lateral-derecho{
+  position: fixed;
+  right: 0;
+  width: 190px;
+  height: 100%;
+  border: 2px #000000 solid;
+}
+
+.lateral-izquierdo{
+  position: fixed;
+  left: 0;
+  width: 190px;
+  height: 100%;
+  border: 2px #000000 solid;
 }
 
 header input{
