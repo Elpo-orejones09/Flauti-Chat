@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { HomePage } from './home.page';
 import { RouterModule } from '@angular/router';
+import { HomePage } from './home.page';
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { RouterModule } from '@angular/router';
       }
     ])
   ],
-  declarations: [HomePage], 
+  declarations: [], // Elimina la declaración de HomePage aquí
 })
 export class HomePageModule {}
