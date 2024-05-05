@@ -14,6 +14,10 @@ export class RegistroComponent implements OnInit {
   public redirectTo(url: String) {
     this.router.navigate([url]);
   }
+
   ngOnInit() { }
 
+  registrarse(){
+    console.log("mostrar Registrar")
+  }
 }
