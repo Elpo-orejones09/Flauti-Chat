@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registro',
-  templateUrl: './registro.component.html',
-  styleUrls: ['./registro.component.scss'],
+  templateUrl: './iniSesion.component.html',
+  styleUrls: ['./iniSesion.component.scss'],
 })
 export class IniSesionComponent implements OnInit {
 
