@@ -11,8 +11,12 @@ const routes: Routes = [
     loadChildren: () => import('./registro/registro.module').then(m => m.RegistroComponentPageModule)
   },
   {
+    path: 'iniSesion',
+    loadChildren: () => import('./iniSesion/iniSesion.module').then(m => m.IniSesionComponentPageModule)
+  },
+  {
     path: '',
-    redirectTo: 'registro',
+    redirectTo: 'iniSesion',
     pathMatch: 'full'
   },
 ];
