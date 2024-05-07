@@ -10,14 +10,9 @@ export class IniSesionComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-
-  public redirectTo(url: String) {
-    this.router.navigate([url]);
-  }
-
   ngOnInit() { }
 
-  registrarse(){
-    console.log("mostrar Registrar")
+  public redirectTo(url: string) {
+    window.location.href = url;
   }
 }

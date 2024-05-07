@@ -11,7 +11,7 @@ export class HomePage {
   constructor(private router: Router) { }
 
 
-  public redirectTo(url: String) {
-    this.router.navigate([url]);
+  public redirectTo(url: string) {
+    window.location.href = url;
   }
 }
