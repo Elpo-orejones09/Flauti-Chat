@@ -2,7 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 
 const app = express();
-const port = 3000; //Tendremos que poner el puerto de Xampp entiendo pero dejo el 3000 como boceto
+const port = 8083; //Tendremos que poner el puerto de Xampp entiendo pero dejo el 3000 como boceto
 
 //Conexión a la base de datos
 const connection = mysql.createConnection({
