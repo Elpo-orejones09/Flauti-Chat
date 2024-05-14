@@ -1,24 +1,19 @@
 const express = require('express');
-
 const app = express();
 const port = 3000;
 
-app.use(express.json());
+// Importar rutas desde index.js
+const indexRoutes = require('./index');
 
-app.get('/', (req, res) => res.send('Hello World!'));
+// Usar rutas definidas en index.js
+app.use('/', indexRoutes);
 
-/* // Ruta para obtener todos los usuarios
-app.get('/api/usuarios', (req, res) => {
-    connection.query('SELECT * FROM Usuario', (err, results) => {
-        if (err) {
-            console.error('Error al obtener usuarios:', err);
-            res.status(500).json({ error: 'Error al obtener usuarios' });
-            return;
-        }
-        res.json(results);
-    });
-});
+// Iniciar el servidor
+app.listen(port, () => console.log(`Server running on port ${port}`));
 
+
+
+/* 
 // Ruta para obtener un usuario por su ID
 app.get('/api/usuarios/:id', (req, res) => {
     const usuarioId = req.params.id;
@@ -76,5 +71,4 @@ app.delete('/api/usuarios/:id', (req, res) => {
     });
 }); */
 
-// Iniciar el servidor
-app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}/`));
+

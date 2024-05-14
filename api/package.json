@@ -1,9 +1,9 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app/server.js"
+    "start": "nodemon app/server.js && code app/server.js"
   },
   "author": "",
   "license": "ISC",
