@@ -1,34 +1,13 @@
 const express = require('express');
-const mysql = require('mysql');
 
 const app = express();
-const port = 3306; //Tendremos que poner el puerto de Xampp entiendo pero dejo el 3000 como boceto
+const port = 3000;
 
-//Conexión a la base de datos
-const connection = mysql.createConnection({
-    host: 'tu_host_de_mysql',
-    user: 'tu_usuario_de_mysql',
-    password: 'tu_contraseña_de_mysql',
-    database: 'tu_base_de_datos'
-});
-
-connection.connect((err) => {
-    if (err) {
-        console.error('Error al conectar a la base de datos:', err);
-        return;
-    }
-    console.log('Conexión establecida con la base de datos MySQL');
-});
-
-// Middleware para manejar el cuerpo de la solicitud JSON cuando usemos postman
 app.use(express.json());
 
+app.get('/', (req, res) => res.send('Hello World!'));
 
-
-
-// Rutas de la API
-
-// Ruta para obtener todos los usuarios
+/* // Ruta para obtener todos los usuarios
 app.get('/api/usuarios', (req, res) => {
     connection.query('SELECT * FROM Usuario', (err, results) => {
         if (err) {
@@ -95,9 +74,7 @@ app.delete('/api/usuarios/:id', (req, res) => {
         }
         res.json({ message: 'Usuario eliminado exitosamente' });
     });
-});
+}); */
 
 // Iniciar el servidor
-app.listen(port, () => {
-    console.log(`Servidor Express corriendo en http://localhost:${port}`);
-});
+app.listen(port, () => console.log(`Example app listening on port ${port}! http://localhost:${port}/`));
