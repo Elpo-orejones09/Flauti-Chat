@@ -12,6 +12,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "firebase-admin": "^12.1.0",
+    "firebase-auth": "^0.1.2",
     "mysql": "^2.18.1"
   },
   "devDependencies": {
