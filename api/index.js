@@ -12,6 +12,16 @@ router.get('/api/usuarios', (req, res) => {
         res.json(results);
     });
 });
-
+router.post('/api/usuarios', (req, res) => {
+    const nuevoUsuario = req.body;
+    connection.query('INSERT INTO usuario SET ?', nuevoUsuario, (err, results) => {
+        if (err) {
+            console.error('Error al crear usuario:', err);
+            res.status(500).json({ error: 'Error al crear usuario' });
+            return;
+        }
+        res.json({ message: 'Usuario creado exitosamente', id: results.insertId });
+    });
+});
 
 module.exports = router;
