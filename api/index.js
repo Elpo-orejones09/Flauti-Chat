@@ -13,7 +13,6 @@ admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
     databaseURL: "https://flauti-chat-default-rtdb.europe-west1.firebasedatabase.app"
 });
-
 // Obtener todos los usuarios 
 app.get('/api/usuarios', (req, res) => {
     connection.query('SELECT * FROM usuarios', (err, results) => {
@@ -27,20 +26,18 @@ app.get('/api/usuarios', (req, res) => {
 });
 
 // Endpoint para iniciar sesión
-app.post('/api/usuarios/iniSesion', async (req, res) => {
+app.get('/api/usuarios/iniSesion', async (req, res) => {
     const { email, password } = req.body;
-
     try {
-        // Intentar autenticar el usuario con Firebase Authentication
+        // Para iniciar sesión en Firebase desde el servidor, necesitas verificar el token en lugar de usar signInWithEmailAndPassword
         const userRecord = await admin.auth().getUserByEmail(email);
-        // Aquí deberiamos verificar la contraseña con un sistema adecuado
-        // Firebase Admin SDK no nos proporciona una forma directa de verificar la contraseña
+        const customToken = await admin.auth().createCustomToken(userRecord.uid);
 
-        const token = await admin.auth().createCustomToken(userRecord.uid);
-        res.status(200).send({ token });
+        // Retorna el token personalizado
+        res.status(200).json({ token: customToken });
     } catch (error) {
         console.error('Error al iniciar sesión:', error);
-        res.status(500).send('Error al iniciar sesión');
+        res.status(500).json({ error: 'Error al iniciar sesión' });
     }
 });
 

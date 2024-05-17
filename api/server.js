@@ -11,21 +11,6 @@ app.use('/', indexRoutes);
 // Iniciar el servidor
 app.listen(port, () => console.log(`Server running on port ${port}`));
 
-//Inicializacion de firebase en server.js
-const admin = require('firebase-admin');
-const serviceAccount = require('./firebase/serviceAccountKey.json');
-
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: 'https://flauti-chat.firebaseio.com/',
-    storageBucket: 'flauti-chat.appspot.com'
-});
-
-const db = admin.firestore();
-const bucket = admin.storage().bucket();
-
-module.exports = { admin, db, bucket };
-
 /* 
 // Ruta para obtener un usuario por su ID
 app.get('/api/usuarios/:id', (req, res) => {
