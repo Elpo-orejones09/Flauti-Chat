@@ -1,0 +1,21 @@
+<div class="perfil-usuario">
+  <div class="perfil-cabecera">
+    <img [src]="usuario.avatarUrl" alt="Avatar de usuario" class="perfil-avatar">
+    <div class="perfil-info">
+      <h1>{{ usuario.nombre }}</h1>
+      <h2>{{ usuario.username }}</h2>
+      <p>{{ usuario.bio }}</p>
+      <div class="perfil-estadisticas">
+        <span><strong>{{ usuario.publicaciones }}</strong> publicaciones</span>
+        <span><strong>{{ usuario.seguidores }}</strong> seguidores</span>
+        <span><strong>{{ usuario.seguidos }}</strong> seguidos</span>
+      </div>
+    </div>
+  </div>
+  <div class="perfil-publicaciones">
+    <div *ngFor="let publicacion of publicaciones" class="publicacion">
+      <img [src]="publicacion.imageUrl" alt="Imagen de la publicación">
+      <p>{{ publicacion.descripcion }}</p>
+    </div>
+  </div>
+</div>
