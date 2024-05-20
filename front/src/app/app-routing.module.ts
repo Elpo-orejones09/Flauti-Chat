@@ -15,6 +15,10 @@ const routes: Routes = [
     loadChildren: () => import('./iniSesion/iniSesion.module').then(m => m.IniSesionComponentPageModule)
   },
   {
+    path: 'userProfile',
+    loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileComponentPageModule)
+  },
+  {
     path: '',
     redirectTo: 'iniSesion',
     pathMatch: 'full'
