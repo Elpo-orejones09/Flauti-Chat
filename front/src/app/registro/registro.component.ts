@@ -33,8 +33,8 @@ export class RegistroComponent implements OnInit {
             text: "Usuario registrado correctamente",
           });
           // Redirigir al usuario después del registro exitoso
-          // this.router.navigate([url]); // Descomentar para usar el enrutador Angular
-          // window.location.href = url; // Alternativa para redirigir usando JavaScript
+          //this.router.navigate([url]); // Descomentar para usar el enrutador Angular
+          window.location.href = url; // Alternativa para redirigir usando JavaScript
         },
         error: (error: HttpErrorResponse) => {
           console.error("Error en el registro: ", error);
@@ -62,5 +62,8 @@ export class RegistroComponent implements OnInit {
         text: "Prueba a ponerla de nuevo",
       });
     }
+  }
+  noneRegist(enlace:string){
+    window.location.href = enlace;
   }
 }
