@@ -29,24 +29,19 @@ app.get('/api/usuarios', (req, res) => {
 
 
 // Endpoint para iniciar sesión
-app.post('/api/usuarios/iniSesion', async (req, res) => {
-  const { email, password } = req.body;
-  
-  try {
-    // Autentica al usuario con correo y contraseña usando Firebase Authentication
-    const userCredential = await admin.auth().signInWithEmailAndPassword(email, password);
-    const user = userCredential.user;
-
-    // Obtiene el token de ID del usuario autenticado
-    const idToken = await user.getIdToken();
-
-    // Retorna el token de ID
-    res.status(200).json({ token: idToken });
-  } catch (error) {
-    console.error('Error al iniciar sesión:', error);
-    res.status(400).json({ error: 'Error al iniciar sesión' });
-  }
+app.get('/api/usuarios/iniSesion', (req, res) => {
+  const email = req.query.email; 
+  connection.query('SELECT * FROM usuarios WHERE email=?', email, (err, results) => {
+    if (err) {
+      console.error('Error al buscar usuario en la base de datos:', err);
+      res.status(500).json({ error: 'Error al iniciar sesión' });
+      return;
+    } else {
+      res.json(results[0]);
+    }
+  });
 });
+
 
 // Crear usuario
 app.post('/api/usuarios', (req, res) => {
