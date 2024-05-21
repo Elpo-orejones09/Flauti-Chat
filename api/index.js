@@ -27,19 +27,24 @@ app.get('/api/usuarios', (req, res) => {
   });
 });
 
+
 // Endpoint para iniciar sesión
 app.post('/api/usuarios/iniSesion', async (req, res) => {
   const { email, password } = req.body;
+  
   try {
-    // Para iniciar sesión en Firebase desde el servidor, necesitas verificar el token en lugar de usar signInWithEmailAndPassword
-    const userRecord = await admin.auth().getUserByEmail(email);
-    const customToken = await admin.auth().createCustomToken(userRecord.uid);
+    // Autentica al usuario con correo y contraseña usando Firebase Authentication
+    const userCredential = await admin.auth().signInWithEmailAndPassword(email, password);
+    const user = userCredential.user;
 
-    // Retorna el token personalizado
-    res.status(200).json({ token: customToken });
+    // Obtiene el token de ID del usuario autenticado
+    const idToken = await user.getIdToken();
+
+    // Retorna el token de ID
+    res.status(200).json({ token: idToken });
   } catch (error) {
     console.error('Error al iniciar sesión:', error);
-    res.status(500).json({ error: 'Error al iniciar sesión' });
+    res.status(400).json({ error: 'Error al iniciar sesión' });
   }
 });
 
