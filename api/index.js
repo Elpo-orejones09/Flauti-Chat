@@ -75,4 +75,44 @@ app.post('/api/usuarios', (req, res) => {
     });
 });
 
+app.get('/api/publicaciones', (req, res) => {
+  connection.query('SELECT * FROM publicaciones', (err, results) => {
+    if (err) {
+      console.error('Error al obtener publicaciones:', err);
+      res.status(500).json({ error: 'Error al obtener publicaciones' });
+      return;
+    }
+    res.json([results]);
+  });
+});
+
+app.get('/api/publicaciones/usuario',(req,res)=> {
+  const usuario =  req.body;
+  connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?', usuario.id_usuario,(err, results) => {
+    if (err) {
+      console.error('Error al buscar usuario en la base de datos:', err);
+      res.status(500).json({ error: 'Error al iniciar sesión' });
+      return;
+    } else {
+      res.json([results]);
+    }
+  });
+});
+
+app.post('/api/publicaciones',(req,res)=> {
+  const publicacion = {
+    usuario_id: req.body.id_usuario,
+    contenido: req.body.contenido,
+    fecha_publicacion: new Date()
+  }
+  connection.query('INSERT INTO publicaciones SET ?', publicacion, (err,results) => {
+    if (err) {
+      console.error('Error al insertar una publicacion a la base de datos', err);
+      res.status(500).json({ error: 'error al insertar usuario' });
+      return;
+    }
+    res.json({ message: 'Publicacion Creada correctamente', id: results });
+  });
+  });
+
 module.exports = app;
