@@ -17,9 +17,14 @@ export class RegistroComponent implements OnInit {
     nombre: ''
   };
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    const usuarioString = sessionStorage.getItem('usuario');
+    if (usuarioString !== null) {
+      this.router.navigate(['/home']); // Redireccionar al home page si hay un usuario en sessionStorage
+    }
+  }
 
   async redirectTo(url: string) {
     if (this.datos.contrasena === this.datos.contrasena2) {
@@ -63,7 +68,7 @@ export class RegistroComponent implements OnInit {
       });
     }
   }
-  noneRegist(enlace:string){
+  noneRegist(enlace: string) {
     window.location.href = enlace;
   }
 }
