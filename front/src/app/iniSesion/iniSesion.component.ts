@@ -34,7 +34,7 @@ export class IniSesionComponent implements OnInit {
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString !== null) {
       const usuario = JSON.parse(usuarioString);
-      this.router.navigate(['/home']); // Redireccionar al home page si hay un usuario en sessionStorage
+      window.location.href='/home'; // Redireccionar al home page si hay un usuario en sessionStorage
     }
   }
 
@@ -46,7 +46,7 @@ export class IniSesionComponent implements OnInit {
           subscribe(infoUsu => {
             console.log("usu", infoUsu);
             sessionStorage.setItem('usuario', JSON.stringify(infoUsu)); // Almacena el usuario en sessionStorage
-            this.router.navigate(['/home']); // Redireccionar al home page después de iniciar sesión
+            window.location.href = '/home'; // Redireccionar al home page después de iniciar sesión
           })
       });
   }
