@@ -1,14 +1,21 @@
-<div class="perfil-usuario">
+<div class="perfil-usuario" *ngIf="usuario">
   <div class="perfil-cabecera">
-    <img [src]="usuario.avatarUrl" alt="Avatar de usuario" class="perfil-avatar">
+    <div class="perfil-avatar-container">
+      <img [src]="usuario.avatarUrl || 'https://via.placeholder.com/150'" alt="Avatar de usuario" class="perfil-avatar">
+    </div>
     <div class="perfil-info">
-      <h1>{{ usuario.nombre }}</h1>
-      <h2>{{ usuario.username }}</h2>
-      <p>{{ usuario.bio }}</p>
+      <div class="perfil-nombre">
+        <h1>{{ usuario.username }}</h1>
+        <button class="perfil-editar">Editar perfil</button>
+      </div>
       <div class="perfil-estadisticas">
         <span><strong>{{ usuario.publicaciones }}</strong> publicaciones</span>
         <span><strong>{{ usuario.seguidores }}</strong> seguidores</span>
         <span><strong>{{ usuario.seguidos }}</strong> seguidos</span>
+      </div>
+      <div class="perfil-bio">
+        <p>{{ usuario.nombre }}</p>
+        <p>{{ usuario.bio }}</p>
       </div>
     </div>
   </div>
