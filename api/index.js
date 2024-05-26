@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const connection = require('./database.js');
 const cors = require('cors');
+
+
 // firebase
 const admin = require("firebase-admin");
 const serviceAccount = require("./firebase/flauti-chat-firebase-adminsdk-maaom-eafd1e5fbd.json");
@@ -60,7 +62,6 @@ app.post('/api/usuarios', (req, res) => {
           res.status(500).json({ error: 'Error al crear usuario' });
           return;
         }
-        console.log(userRecord);
         res.json({ message: 'Usuario creado exitosamente', id: results.insertId });
       });
     })
@@ -101,14 +102,14 @@ app.get('/api/publicaciones/usuario',(req,res)=> {
 
 app.post('/api/publicaciones',(req,res)=> {
   const publicacion = {
-    usuario_id: req.body.id_usuario,
+    usuario_id: req.body.usuario_id,
     contenido: req.body.contenido,
     fecha_publicacion: new Date()
   }
   connection.query('INSERT INTO publicaciones SET ?', publicacion, (err,results) => {
     if (err) {
       console.error('Error al insertar una publicacion a la base de datos', err);
-      res.status(500).json({ error: 'error al insertar usuario' });
+      res.status(500).json({ error: 'error al insertar publicacion' });
       return;
     }
     res.json({ message: 'Publicacion Creada correctamente', id: results });

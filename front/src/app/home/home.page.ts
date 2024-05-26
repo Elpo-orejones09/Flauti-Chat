@@ -8,11 +8,20 @@ import { HomdService } from '../services/homd.service';
 })
 export class HomePage {
   datos:any;
-
+  usuario:any;
+  imageSrc:any;
 
   constructor(private router: Router, private homeService : HomdService) { }
 
-  ngOnInit():void { }
+  ngOnInit():void { 
+    this.usuario = sessionStorage.getItem('usuario');
+    this.usuario =JSON.parse(this.usuario);
+    console.log(this.usuario);
+    if(!this.usuario){
+      window.location.href="/iniSesion";
+    }
+  }
+  
   obtenerArchivo(e:any){
     const archivo = e.target.files[0];
     console.log(archivo);
@@ -21,7 +30,19 @@ export class HomePage {
   }
 
   subirPublicacion(){
-
+    if (this.datos) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        // Aquí puedes manejar el resultado, por ejemplo, asignándolo a una variable
+      this.imageSrc = e.target.result;
+      };
+      reader.readAsDataURL(this.datos);
+    }
+    console.log("datos",this.imageSrc);
+     this.homeService.postPublicacion(this.usuario.id, this.imageSrc).
+     subscribe(data => {
+      console.log("subida exitosa", data);
+     }) 
   }
 
   public redirectTo(url: string) {
