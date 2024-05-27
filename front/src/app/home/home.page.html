@@ -4,18 +4,52 @@
     <button (click)="subirPublicacion()">Subir</button>
     <input type="text" placeholder="Buscar...">
     <div class="fotoPerfil" (click)="redirectTo('/userProfile')"> <p>Foto</p> </div>
-</header>
-
-<div class="lateral-derecho">
-
-</div>
-
-<div class="lateral-izquierdo">
+  </header>
+  
+  <div class="lateral-derecho">
+    <!-- Contenido lateral derecho -->
+  </div>
+  
+  <div class="lateral-izquierdo">
     <div>
-
+      <!-- Contenido lateral izquierdo -->
     </div>
-</div>
-
-<div class="publicaciones">
-    
-</div>
+  </div>
+  
+  <div class="publicaciones">
+    <!-- Prototipo de Publicación -->
+    <div class="publication-card">
+      <div class="publication-header">
+        <img class="avatar" src="https://via.placeholder.com/50" alt="Avatar">
+        <div class="user-info">
+          <span class="username">juanperez</span>
+          <span class="time">2h</span>
+        </div>
+      </div>
+      <div class="publication-image-wrapper">
+        <img class="publication-image" src="https://via.placeholder.com/300" alt="Publication Image">
+      </div>
+      <div class="publication-footer">
+        <div class="publication-actions">
+          <button class="like-button">Like</button>
+          <button class="comment-button">Comentario</button>
+          <button class="share-button">Compartir</button>
+        </div>
+        <div class="publication-caption">
+          <span class="username">juanperez</span>
+          <span>Un día en la playa</span>
+        </div>
+        <div class="publication-comments">
+          <div class="comment">
+            <span class="username">user1</span>
+            <span>¡Qué bonito lugar!</span>
+          </div>
+          <div class="comment">
+            <span class="username">user2</span>
+            <span>Me encantaría estar allí.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
