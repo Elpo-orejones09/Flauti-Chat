@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -7,23 +6,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./user-profile.component.scss'],
 })
 export class UserProfileComponent implements OnInit {
-  usuario = {
-    nombre: 'Juan Pérez',
-    username: 'juanperez',
-    bio: 'Aficionado a la fotografía y los viajes',
-    avatarUrl: 'https://via.placeholder.com/150',
-    publicaciones: 34,
-    seguidores: 1200,
-    seguidos: 300
-  };
-
-  publicaciones = [//Esto mas adelante lo quitare es una api para saber el tamaño de las imagenes y del hueco de los componentes
-    { id: 1, imageUrl: 'https://via.placeholder.com/300', descripcion: 'Un día en la playa' },
-    { id: 2, imageUrl: 'https://via.placeholder.com/300', descripcion: 'Puesta de sol' },
-  ];
-
-  constructor() { }
+  usuario: any;
+  publicaciones: any[] = []; // Adaptar para que se cargue dinámicamente si es necesario
 
   ngOnInit(): void {
+    const usuarioString = sessionStorage.getItem('usuario');
+    if (usuarioString) {
+      this.usuario = JSON.parse(usuarioString);
+      // Si las publicaciones están almacenadas en el objeto usuario, adaptarlo aquí
+      // this.publicaciones = this.usuario.publicaciones;
+    } else {
+      // Manejo del caso en el que no hay un usuario logueado
+      console.error("No se encontró un usuario logueado.");
+    }
   }
 }
+
