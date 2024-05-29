@@ -11,11 +11,12 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   // Registro de usuario
-  registUsu(email: string, password: string, nombre: string): Observable<any> {
+  registUsu(email: string, password: string, nombre: string, foto: string): Observable<any> {
     const usuario = {
       displayName: nombre,
       email: email,
-      password: password
+      password: password,
+      photoURL: foto
     };
     return this.http.post(`${this.apiUrl}/usuarios`, usuario);
   }

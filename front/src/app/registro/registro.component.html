@@ -13,7 +13,7 @@
     <input type="text" class="input" name="user" placeholder="Introduce el nombre de usuario" [(ngModel)]="datos.user">
   </div>
 
-  <label>Correo electrónico </label>
+  <label>Correo electrónico</label>
   <div class="inputForm">
     <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
       <g id="Layer_3" data-name="Layer 3">
@@ -71,7 +71,7 @@
   </div>
   <div class="inputForm">
     <label for="fotoPerfil"></label>
-    <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*" required>
+    <input type="file" id="fotoPerfil" name="fotoPerfil" (change)="obtenerArchivo($event)">
   </div>
 
   <button class="button-submit" (click)="redirectTo('/iniSesion')">Registrarse</button>
