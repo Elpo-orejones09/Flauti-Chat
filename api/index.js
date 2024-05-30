@@ -50,9 +50,10 @@ app.post('/api/usuarios', (req, res) => {
   const nuevoUsuario = req.body;
   admin.auth().createUser(nuevoUsuario)
     .then((userRecord) => {
+      console.log("usuario",nuevoUsuario)
       // La creación de usuario fue exitosa, ahora puedes insertar los datos en la base de datos
       const usuarioBdd = {
-        nombre: userRecord.displayName,
+        nombre: nuevoUsuario.displayName,
         email: userRecord.email,
         fotoPerfil: userRecord.photoURL
       };

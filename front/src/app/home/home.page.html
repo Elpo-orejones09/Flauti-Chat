@@ -1,14 +1,24 @@
 <header>
   <img class="logo" src="assets/img/flauti-logo.jpg" alt="Logo">
+  <!-- quiero que me hagas un pequeño formulario para la foto, con los mismos nombres, para que 
+       funcione -->
   <input type="file" (change)="obtenerArchivo($event)" />
   <button (click)="subirPublicacion()">Subir</button>
+
   <div class="container">
-    <input type="text" (focus)="showContent()" (blur)="hideContent()" placeholder="Buscar...">
-    <div  class="user-container">
-    <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
-      <div *ngFor="let users of allUsers">{{users.email}}</div>
+    <input 
+      type="text" 
+      (focus)="showContent()" 
+      (blur)="hideContent()" 
+      [(ngModel)]="searchTerm" 
+      placeholder="Buscar..." 
+    />
+    <div class="user-container">
+      <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
+        <!-- Mostrar los usuarios filtrados -->
+        <div *ngFor="let user of filteredUsers">{{user.email}} <button>Seguir</button></div>
+      </div>
     </div>
-  </div>
   </div>
   <div class="fotoPerfil" (click)="redirectTo('/userProfile')">
     <p>Foto</p>

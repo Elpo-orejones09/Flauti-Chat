@@ -13,6 +13,8 @@ export class HomePage implements OnInit{
 
   fecha = Date();
   allUsers:any[] = [];
+  searchTerm: string = '';
+
   usuario:any;
   app:any;
   storage:any;
@@ -101,6 +103,12 @@ export class HomePage implements OnInit{
 
   keepContentVisible() {
     this.keepVisible = true;
+  }
+
+  get filteredUsers() {
+    return this.allUsers.filter(user =>
+      user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+    );
   }
 
 }

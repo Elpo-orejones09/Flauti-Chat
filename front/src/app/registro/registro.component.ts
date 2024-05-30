@@ -76,9 +76,8 @@ export class RegistroComponent implements OnInit {
         console.log("url", downloadURL);
   
         // Registrar al usuario con la URL de la imagen
-        this.authService.registUsu(this.datos.email, this.datos.contrasena, this.datos.nombre, downloadURL).subscribe({
+        this.authService.registUsu(this.datos.email, this.datos.contrasena, this.datos.user, downloadURL).subscribe({
           next: data => {
-            console.log("datosRegistro ", data);
             Swal.fire({
               icon: "success",
               title: "Registro exitoso",
