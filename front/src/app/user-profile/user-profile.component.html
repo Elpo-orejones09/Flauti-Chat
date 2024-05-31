@@ -1,17 +1,18 @@
 <div class="perfil-usuario" *ngIf="usuario">
   <div class="perfil-cabecera">
     <div class="perfil-avatar-container">
-      <img [src]="usuario.avatarUrl || 'https://via.placeholder.com/150'" alt="Avatar de usuario" class="perfil-avatar">
+      <img [src]="usuario.fotoPerfil || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=00'" alt="Avatar de usuario" class="perfil-avatar">
     </div>
     <div class="perfil-info">
       <div class="perfil-nombre">
         <h1>{{ usuario.username }}</h1>
         <button class="perfil-editar">Editar perfil</button>
+        <button class="perfil-editar" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
       <div class="perfil-estadisticas">
         <span><strong>{{ usuario.publicaciones }}</strong> publicaciones</span>
-        <span><strong>{{ usuario.seguidores }}</strong> seguidores</span>
-        <span><strong>{{ usuario.seguidos }}</strong> seguidos</span>
+        <span><strong>{{ seguidores }}</strong> seguidores</span>
+        <span><strong>{{ seguidos }}</strong> seguidos</span>
       </div>
       <div class="perfil-bio">
         <p>{{ usuario.nombre }}</p>

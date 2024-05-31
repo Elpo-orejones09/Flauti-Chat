@@ -117,4 +117,43 @@ app.post('/api/publicaciones',(req,res)=> {
   });
   });
 
+  app.get('/api/seguidores/:id', (req, res) => {
+    const usuario =  req.params.id;
+    connection.query('SELECT * FROM seguir WHERE seguido_id = ?', usuario, (err, results) => {
+      if (err) {
+        console.error('Error al obtener seguidores:', err);
+        res.status(500).json({ error: 'Error al obtener seguidores' });
+        return;
+      }
+      res.json(results);
+    });
+  });
+
+  app.get('/api/seguidos/:id', (req, res) => {
+    const usuario =  req.params.id;
+    connection.query('SELECT * FROM seguir WHERE seguidor_id = ?', usuario,(err, results) => {
+      if (err) {
+        console.error('Error al obtener usuarios:', err);
+        res.status(500).json({ error: 'Error al obtener usuarios' });
+        return;
+      }
+      res.json(results);
+    });
+  });
+
+  app.post('/api/seguir',(req,res)=> {
+    const seguir = {
+      seguidor_id: req.body.seguidor_id,
+      seguido_id: req.body.seguido_id,
+      fecha_seguimiento:Date()
+    }
+    connection.query('INSERT INTO seguir SET ?', seguir, (err,results) => {
+      if (err) {
+        console.error('Error al insertar seguir a la base de datos', err);
+        res.status(500).json({ error: 'error al insertar seguir' });
+        return;
+      }
+      res.json({ message: 'Seguido correctamente', id: results });
+    });
+    });
 module.exports = app;
