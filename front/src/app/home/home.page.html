@@ -20,7 +20,7 @@
       </div>
     </div>
   </div>
-  <div class="fotoPerfil" (click)="redirectTo('/userProfile')">
+  <div class="fotoPerfil" [src]="usuario.avatarUrl || 'https://via.placeholder.com/150'" (click)="redirectTo('/userProfile')">
     <p>Foto</p>
   </div>
 </header>

@@ -3,22 +3,24 @@ import { Router } from '@angular/router';
 import { HomdService } from '../services/homd.service';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.css'],
 })
-export class HomePage implements OnInit{
-  datos:any;
+export class HomePage implements OnInit {
+  datos: any;
 
   fecha = Date();
-  allUsers:any[] = [];
+  allUsers: any[] = [];
   searchTerm: string = '';
 
-  usuario:any;
-  app:any;
-  storage:any;
-  storageRef:any;
+  usuario: any;
+  app: any;
+  storage: any;
+  storageRef: any;
   firebaseConfig = {
     apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",
     authDomain: "flauti-chat.firebaseapp.com",
@@ -33,9 +35,9 @@ export class HomePage implements OnInit{
   isContentVisible: boolean = false;
   keepVisible: boolean = false;
 
-  constructor(private router: Router, private homeService : HomdService) { }
+  constructor(private router: Router, private homeService: HomdService) { }
 
-  async ngOnInit() { 
+  async ngOnInit() {
     this.homeService.getAllUsus().subscribe({
       next: (data) => {
         this.allUsers = data;
@@ -46,41 +48,41 @@ export class HomePage implements OnInit{
       }
     });
     this.usuario = sessionStorage.getItem('usuario');
-    this.usuario =JSON.parse(this.usuario);
+    this.usuario = JSON.parse(this.usuario);
     console.log(this.usuario);
-    if(!this.usuario){
-      window.location.href="/iniSesion";
+    if (!this.usuario) {
+      window.location.href = "/iniSesion";
     }
-    
+
     this.app = initializeApp(this.firebaseConfig);
-    this.storage= getStorage(this.app);
+    this.storage = getStorage(this.app);
   }
-  
-  obtenerArchivo(e:any){
+
+  obtenerArchivo(e: any) {
     const archivo = e.target.files[0];
     console.log(archivo);
     this.datos = archivo;
 
   }
 
-  updateTime(){
-    this.fecha=Date();
+  updateTime() {
+    this.fecha = Date();
   }
 
-  subirPublicacion(){
+  subirPublicacion() {
     this.updateTime();
-      const newNameFoto:string = `${this.usuario.email}/${this.fecha}`;
-      this.storageRef = ref(this.storage, newNameFoto);
-      uploadBytes(this.storageRef, this.datos).then((snapshot) => {
-        console.log('Uploaded a blob or file!', snapshot);
-        getDownloadURL(this.storageRef).then(data => {
-          console.log("url",data)
-          this.homeService.postPublicacion(this.usuario.id, data).
-            subscribe(data => {
-              console.log("subida exitosa", data);
-            }) 
-        })
-      });
+    const newNameFoto: string = `${this.usuario.email}/${this.fecha}`;
+    this.storageRef = ref(this.storage, newNameFoto);
+    uploadBytes(this.storageRef, this.datos).then((snapshot) => {
+      console.log('Uploaded a blob or file!', snapshot);
+      getDownloadURL(this.storageRef).then(data => {
+        console.log("url", data)
+        this.homeService.postPublicacion(this.usuario.id, data).
+          subscribe(data => {
+            console.log("subida exitosa", data);
+          })
+      })
+    });
     /*   */
   }
 
@@ -111,4 +113,16 @@ export class HomePage implements OnInit{
     );
   }
 
+  async loadUserProfile(email: string) {
+    const db = getFirestore(this.app);
+    const userDocRef = doc(db, "users", email);
+    const userDoc = await getDoc(userDocRef);
+
+    if (userDoc.exists()) {
+      this.usuario = userDoc.data();
+    } else {
+      console.error("No user document found!");
+    }
+  }
 }
+
