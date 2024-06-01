@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
+import { PerfilService } from '../services/perfil.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,11 +10,11 @@ import { UserService } from '../services/user.service';
 export class UserProfileComponent implements OnInit {
   usuario: any;
   publicaciones: any[] = []; // Adaptar para que se cargue dinámicamente si es necesario
-
+  numeroPublicaciones:number=0;
   seguidores:number=0; 
   seguidos:number=0;
 
-  constructor(private userService:UserService){}
+  constructor(private userService:UserService, private perfilService:PerfilService){}
 
   ngOnInit(): void {
     const usuarioString = sessionStorage.getItem('usuario');
@@ -24,9 +25,20 @@ export class UserProfileComponent implements OnInit {
     } else {
       window.location.href="/iniSesion";
     }
+    this.getPublicaciones();
     this.getSeguidoresSeguidos();
   }
   
+  getPublicaciones(){
+    this.perfilService.getPublicaciones(this.usuario.id).subscribe(data => {
+      this.publicaciones = data;
+      console.log("publicaciones usuario",data);
+    })
+    this.numeroPublicaciones =  this.publicaciones.length;
+    
+
+  }
+
   getSeguidoresSeguidos(){
     this.userService.getSeguidores(this.usuario.id).subscribe(data=>{
       this.seguidores = data.length;

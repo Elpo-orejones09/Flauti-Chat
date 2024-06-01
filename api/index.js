@@ -101,15 +101,15 @@ app.get('/api/publicaciones', (req, res) => {
   });
 });
 
-app.get('/api/publicaciones/usuario', (req, res) => {
-  const usuario = req.body;
-  connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?', usuario.id_usuario, (err, results) => {
+app.get('/api/publicaciones/usuario/:id', (req, res) => {
+  const usuario = req.params.id;
+  connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?',[usuario], (err, results) => {
     if (err) {
       console.error('Error al buscar usuario en la base de datos:', err);
       res.status(500).json({ error: 'Error al iniciar sesión' });
       return;
     } else {
-      res.json([results]);
+      res.json(results);
     }
   });
 });
@@ -127,6 +127,18 @@ app.post('/api/publicaciones', (req, res) => {
       return;
     }
     res.json({ message: 'Publicacion Creada correctamente', id: results });
+  });
+});
+
+app.delete('/api/publicaciones/:id', (req, res) => {
+  const publicacion = req.params.id;
+  connection.query('DELETE FROM publicaciones WHERE id = ?', [publicacion], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar publicacion:', err);
+      res.status(500).json({ error: 'Error al eliminar publicacion' });
+      return;
+    }
+    res.json({ message: 'Publicacion eliminadas correctamente' });
   });
 });
 
@@ -179,7 +191,7 @@ app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
       res.status(500).json({ error: 'Error al eliminar usuarios' });
       return;
     }
-    res.json({ message: 'Usuarios eliminados correctamente' });
+    res.json({ message: 'Seguido eliminado correctamente' });
   });
 });
 

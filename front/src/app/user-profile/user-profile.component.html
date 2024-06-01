@@ -10,7 +10,7 @@
         <button class="perfil-editar" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
       <div class="perfil-estadisticas">
-        <span><strong>{{ usuario.publicaciones }}</strong> publicaciones</span>
+        <span><strong>{{ numeroPublicaciones }}</strong> publicaciones</span>
         <span><strong>{{ seguidores }}</strong> seguidores</span>
         <span><strong>{{ seguidos }}</strong> seguidos</span>
       </div>
@@ -22,8 +22,9 @@
   </div>
   <div class="perfil-publicaciones">
     <div *ngFor="let publicacion of publicaciones" class="publicacion">
-      <img [src]="publicacion.imageUrl" alt="Imagen de la publicación">
+      <img [src]="publicacion.contenido" alt="Imagen de la publicación">
+      
     </div>
-  </div>
+  </div>  
 </div>
 

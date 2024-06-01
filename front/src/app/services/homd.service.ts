@@ -14,6 +14,10 @@ export class HomdService {
     return this.http.get(`${this.apiUrl}/usuarios/no/${id}`);
   }
 
+  getPublicaciones(){
+    //coger publicaciones por id de usuario
+  }
+
   postPublicacion(usuario_id:any, contenido:any,):Observable<any>{
     const data = {
       usuario_id:usuario_id,
