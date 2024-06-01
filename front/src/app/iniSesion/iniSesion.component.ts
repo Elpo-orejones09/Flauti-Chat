@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ini-sesion',
@@ -34,7 +35,7 @@ export class IniSesionComponent implements OnInit {
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString !== null) {
       const usuario = JSON.parse(usuarioString);
-      window.location.href='/home'; // Redireccionar al home page si hay un usuario en sessionStorage
+      window.location.href = '/home'; // Redireccionar al home page si hay un usuario en sessionStorage
     }
   }
 
@@ -47,7 +48,30 @@ export class IniSesionComponent implements OnInit {
             console.log("usu", infoUsu);
             sessionStorage.setItem('usuario', JSON.stringify(infoUsu)); // Almacena el usuario en sessionStorage
             window.location.href = '/home'; // Redireccionar al home page después de iniciar sesión
-          })
+          }, (error: any) => {
+            console.error("Error en la obtención de la información del usuario: ", error);
+            Swal.fire({
+              icon: "error",
+              title: "Error en la sesión",
+              text: "No se pudo obtener la información del usuario. Por favor, intenta de nuevo.",
+            });
+          });
+      })
+      .catch((error: any) => {
+        console.error("Error en el inicio de sesión: ", error);
+        let errorMessage = 'Hubo un problema al iniciar sesión. Por favor, intenta de nuevo.';
+        if (error.code === 'auth/user-not-found') {
+          errorMessage = 'No se encontró una cuenta con ese correo electrónico.';
+        } else if (error.code === 'auth/wrong-password') {
+          errorMessage = 'La contraseña es incorrecta. Por favor, intenta de nuevo.';
+        } else if (error.code === 'auth/network-request-failed') {
+          errorMessage = 'No se pudo conectar con el servidor. Por favor, verifica tu conexión a internet o que el servidor esté activo.';
+        }
+        Swal.fire({
+          icon: "error",
+          title: "Error en el inicio de sesión",
+          text: errorMessage,
+        });
       });
   }
 
@@ -55,3 +79,4 @@ export class IniSesionComponent implements OnInit {
     window.location.href = url;
   }
 }
+

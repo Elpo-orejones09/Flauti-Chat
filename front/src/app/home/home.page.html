@@ -6,22 +6,24 @@
   <button (click)="subirPublicacion()">Subir</button>
 
   <div class="container">
-    <input 
-      type="text" 
-      (focus)="showContent()" 
-      (blur)="hideContent()" 
-      [(ngModel)]="searchTerm" 
-      placeholder="Buscar..." 
-    />
+    <input type="text" (focus)="showContent()" (blur)="hideContent()" [(ngModel)]="searchTerm"
+      placeholder="Buscar..." />
     <div class="user-container">
       <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
         <!-- Mostrar los usuarios filtrados -->
-        <div *ngFor="let user of filteredUsers">{{user.email}} <button *ngIf="!user.follow" (click)="followPeople(user.id)">Seguir</button> <button *ngIf="user.follow" (click)="unfollowPeople(user.id)">Siguiendo</button></div>
+        <div *ngFor="let user of filteredUsers">
+          {{user.email}}
+          <button *ngIf="!user.follow" class="follow-button" (click)="followPeople(user.id)">Seguir</button>
+          <button *ngIf="user.follow" class="unfollow-button" (click)="unfollowPeople(user.id)">Siguiendo</button>
+        </div>
+
       </div>
     </div>
   </div>
-  <img class="fotoPerfil" [src]="usuario.fotoPerfil|| 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'" (click)="redirectTo('/userProfile')">
-<!--     <p>Foto</p>
+  <img class="fotoPerfil"
+    [src]="usuario.fotoPerfil|| 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'"
+    (click)="redirectTo('/userProfile')">
+  <!--     <p>Foto</p>
   </div> -->
 </header>
 
