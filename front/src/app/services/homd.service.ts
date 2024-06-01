@@ -10,8 +10,8 @@ export class HomdService {
 
   constructor(private http: HttpClient) { }
 
-  getAllUsus():Observable<any>{
-    return this.http.get(`${this.apiUrl}/usuarios`);
+  getAllUsus(id:number):Observable<any>{
+    return this.http.get(`${this.apiUrl}/usuarios/no/${id}`);
   }
 
   postPublicacion(usuario_id:any, contenido:any,):Observable<any>{

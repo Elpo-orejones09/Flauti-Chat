@@ -19,4 +19,18 @@ export class UserService {
     const url = `${this.apiUrl}/seguidos/${user_id}`;
     return this.http.get(url);
   }
+
+  createSeguidor(seguidor_id:number, seguido_id:number):Observable<any>{
+    const content = {
+      seguidor_id : seguidor_id,
+      seguido_id  : seguido_id
+    }
+    const url = `${this.apiUrl}/seguir`;
+    return this.http.post(url, content);
+  }
+  
+  deleteSeguidor(seguidor_id:number, seguido_id: number):Observable<any>{
+    const url = `${this.apiUrl}/seguidos/${seguidor_id}/${seguido_id}`;
+    return this.http.delete(url);
+  }
 }

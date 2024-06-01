@@ -4,6 +4,7 @@ import { HomdService } from '../services/homd.service';
 import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,8 @@ export class HomePage implements OnInit {
   fecha = Date();
   allUsers: any[] = [];
   searchTerm: string = '';
+
+  follows :any;
 
   usuario: any;
   app: any;
@@ -35,27 +38,34 @@ export class HomePage implements OnInit {
   isContentVisible: boolean = false;
   keepVisible: boolean = false;
 
-  constructor(private router: Router, private homeService: HomdService) { }
+  constructor(private router: Router, private homeService: HomdService, private userService: UserService) { }
 
   async ngOnInit() {
-    this.homeService.getAllUsus().subscribe({
-      next: (data) => {
-        this.allUsers = data;
-        console.log("users", data);
-      },
-      error: (error) => {
-        console.error('Error fetching users', error);
-      }
-    });
     this.usuario = sessionStorage.getItem('usuario');
     this.usuario = JSON.parse(this.usuario);
     console.log(this.usuario);
     if (!this.usuario) {
       window.location.href = "/iniSesion";
     }
+    this.homeService.getAllUsus(this.usuario.id).subscribe({
+      next: (data) => {
+        this.allUsers = data;
+        console.log("users", data);
+      },
+      error: (error) => {
+        console.error('Error fetching users', error);
+      } 
+    });
+    this.userService.getSeguidos(this.usuario.id).subscribe(data => {
+      this.follows = data;
+      this.getUsusSeguidos();
+      console.log("allUsers",this.allUsers);
+    })
+
 
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
+    
   }
 
   obtenerArchivo(e: any) {
@@ -83,7 +93,7 @@ export class HomePage implements OnInit {
           })
       })
     });
-    /*   */
+
   }
 
   public redirectTo(url: string) {
@@ -113,7 +123,7 @@ export class HomePage implements OnInit {
     );
   }
 
-  async loadUserProfile(email: string) {
+  /* async loadUserProfile(email: string) {
     const db = getFirestore(this.app);
     const userDocRef = doc(db, "users", email);
     const userDoc = await getDoc(userDocRef);
@@ -123,6 +133,32 @@ export class HomePage implements OnInit {
     } else {
       console.error("No user document found!");
     }
+  } */
+
+  followPeople(seguido_id:number){
+    this.userService.createSeguidor(this.usuario.id,seguido_id).subscribe(()=>{
+      const i = this.allUsers.findIndex(user => user.id === seguido_id);
+      this.allUsers[i].follow=true;
+    })
   }
+
+  unfollowPeople(seguido_id:number){
+    this.userService.deleteSeguidor(this.usuario.id,seguido_id).subscribe(()=>{
+      const i = this.allUsers.findIndex(user => user.id === seguido_id);
+      this.allUsers[i].follow = false;
+    })
+  }
+
+  getUsusSeguidos() {
+    const seguidos = this.allUsers.filter(user => this.follows.some((follow:any) => follow.seguido_id === user.id));
+    const noSeguidos = this.allUsers.filter(user => !this.follows.some((follow:any) => follow.seguido_id === user.id));
+
+    noSeguidos.forEach(user => user.follow = false);
+    seguidos.forEach(user => user.follow = true);
+
+    this.allUsers = [...noSeguidos, ...seguidos];
+
+    console.log("usuariosAll", this.allUsers);
+}
 }
 

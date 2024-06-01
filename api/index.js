@@ -29,10 +29,23 @@ app.get('/api/usuarios', (req, res) => {
   });
 });
 
+app.get("/api/usuarios/no/:id", (req, res) => {
+  const user = req.params.id;
+  connection.query('SELECT * FROM usuarios WHERE id != ?', [user], (err, results) => {
+    if (err) {
+      console.error('Error al obtener usuarios:', err);
+      res.status(500).json({ error: 'Error al obtener usuarios' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+
 
 // Endpoint para iniciar sesión
 app.get('/api/usuarios/iniSesion', (req, res) => {
-  const email = req.query.email; 
+  const email = req.query.email;
   connection.query('SELECT * FROM usuarios WHERE email=?', email, (err, results) => {
     if (err) {
       console.error('Error al buscar usuario en la base de datos:', err);
@@ -50,7 +63,7 @@ app.post('/api/usuarios', (req, res) => {
   const nuevoUsuario = req.body;
   admin.auth().createUser(nuevoUsuario)
     .then((userRecord) => {
-      console.log("usuario",nuevoUsuario)
+      console.log("usuario", nuevoUsuario)
       // La creación de usuario fue exitosa, ahora puedes insertar los datos en la base de datos
       const usuarioBdd = {
         nombre: nuevoUsuario.displayName,
@@ -88,9 +101,9 @@ app.get('/api/publicaciones', (req, res) => {
   });
 });
 
-app.get('/api/publicaciones/usuario',(req,res)=> {
-  const usuario =  req.body;
-  connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?', usuario.id_usuario,(err, results) => {
+app.get('/api/publicaciones/usuario', (req, res) => {
+  const usuario = req.body;
+  connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?', usuario.id_usuario, (err, results) => {
     if (err) {
       console.error('Error al buscar usuario en la base de datos:', err);
       res.status(500).json({ error: 'Error al iniciar sesión' });
@@ -101,13 +114,13 @@ app.get('/api/publicaciones/usuario',(req,res)=> {
   });
 });
 
-app.post('/api/publicaciones',(req,res)=> {
+app.post('/api/publicaciones', (req, res) => {
   const publicacion = {
     usuario_id: req.body.usuario_id,
     contenido: req.body.contenido,
     fecha_publicacion: new Date()
   }
-  connection.query('INSERT INTO publicaciones SET ?', publicacion, (err,results) => {
+  connection.query('INSERT INTO publicaciones SET ?', publicacion, (err, results) => {
     if (err) {
       console.error('Error al insertar una publicacion a la base de datos', err);
       res.status(500).json({ error: 'error al insertar publicacion' });
@@ -115,45 +128,59 @@ app.post('/api/publicaciones',(req,res)=> {
     }
     res.json({ message: 'Publicacion Creada correctamente', id: results });
   });
-  });
+});
 
-  app.get('/api/seguidores/:id', (req, res) => {
-    const usuario =  req.params.id;
-    connection.query('SELECT * FROM seguir WHERE seguido_id = ?', usuario, (err, results) => {
-      if (err) {
-        console.error('Error al obtener seguidores:', err);
-        res.status(500).json({ error: 'Error al obtener seguidores' });
-        return;
-      }
-      res.json(results);
-    });
-  });
-
-  app.get('/api/seguidos/:id', (req, res) => {
-    const usuario =  req.params.id;
-    connection.query('SELECT * FROM seguir WHERE seguidor_id = ?', usuario,(err, results) => {
-      if (err) {
-        console.error('Error al obtener usuarios:', err);
-        res.status(500).json({ error: 'Error al obtener usuarios' });
-        return;
-      }
-      res.json(results);
-    });
-  });
-
-  app.post('/api/seguir',(req,res)=> {
-    const seguir = {
-      seguidor_id: req.body.seguidor_id,
-      seguido_id: req.body.seguido_id,
-      fecha_seguimiento:Date()
+app.get('/api/seguidores/:id', (req, res) => {
+  const usuario = req.params.id;
+  connection.query('SELECT * FROM seguir WHERE seguido_id = ?', usuario, (err, results) => {
+    if (err) {
+      console.error('Error al obtener seguidores:', err);
+      res.status(500).json({ error: 'Error al obtener seguidores' });
+      return;
     }
-    connection.query('INSERT INTO seguir SET ?', seguir, (err,results) => {
-      if (err) {
-        console.error('Error al insertar seguir a la base de datos', err);
-        res.status(500).json({ error: 'error al insertar seguir' });
-        return;
-      }
-      res.json({ message: 'Seguido correctamente', id: results });
-    });
-    });
+    res.json(results);
+  });
+});
+
+app.get('/api/seguidos/:id', (req, res) => {
+  const usuario = req.params.id;
+  connection.query('SELECT * FROM seguir WHERE seguidor_id = ?', usuario, (err, results) => {
+    if (err) {
+      console.error('Error al obtener usuarios:', err);
+      res.status(500).json({ error: 'Error al obtener usuarios' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/api/seguir', (req, res) => {
+  const seguir = {
+    seguidor_id: req.body.seguidor_id,
+    seguido_id: req.body.seguido_id,
+    fecha_seguimiento: Date()
+  }
+  connection.query('INSERT INTO seguir SET ?', seguir, (err, results) => {
+    if (err) {
+      console.error('Error al insertar seguir a la base de datos', err);
+      res.status(500).json({ error: 'error al insertar seguir' });
+      return;
+    }
+    res.json({ message: 'Seguido correctamente', id: results });
+  });
+});
+
+app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
+  const seguidor = req.params.seguidor_id;
+  const seguido = req.params.seguido_id;
+  connection.query('DELETE FROM seguir WHERE seguidor_id = ? AND seguido_id = ?', [seguidor, seguido], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar usuarios:', err);
+      res.status(500).json({ error: 'Error al eliminar usuarios' });
+      return;
+    }
+    res.json({ message: 'Usuarios eliminados correctamente' });
+  });
+});
+
 module.exports = app;

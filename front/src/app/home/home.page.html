@@ -16,7 +16,7 @@
     <div class="user-container">
       <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
         <!-- Mostrar los usuarios filtrados -->
-        <div *ngFor="let user of filteredUsers">{{user.email}} <button>Seguir</button></div>
+        <div *ngFor="let user of filteredUsers">{{user.email}} <button *ngIf="!user.follow" (click)="followPeople(user.id)">Seguir</button> <button *ngIf="user.follow" (click)="unfollowPeople(user.id)">Siguiendo</button></div>
       </div>
     </div>
   </div>
