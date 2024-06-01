@@ -25,4 +25,8 @@ export class HomdService {
     };
     return this.http.post(`${this.apiUrl}/publicaciones`, data)
   }
+  getPublicacionesUsuarios(user_id:number):Observable<any>{
+    const url = `${this.apiUrl}/publicaciones/usuario/${user_id}`;
+    return this.http.get(url);
+  }
 }

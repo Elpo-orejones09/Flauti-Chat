@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { UserService } from '../services/user.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -19,6 +20,8 @@ export class HomePage implements OnInit {
   searchTerm: string = '';
 
   follows :any;
+
+  publicaciones:any;
 
   usuario: any;
   app: any;
@@ -59,10 +62,10 @@ export class HomePage implements OnInit {
     this.userService.getSeguidos(this.usuario.id).subscribe(data => {
       this.follows = data;
       this.getUsusSeguidos();
-      console.log("allUsers",this.allUsers);
+      this.getFollowPublicaciones();
     })
 
-
+      
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
     
@@ -147,6 +150,29 @@ export class HomePage implements OnInit {
       const i = this.allUsers.findIndex(user => user.id === seguido_id);
       this.allUsers[i].follow = false;
     })
+  }
+
+  async getFollowPublicaciones(){
+    let publicaciones: any[] = [];
+  const observables = this.follows.map((seguidos:any) =>
+    this.homeService.getPublicacionesUsuarios(seguidos.seguido_id)
+  );
+
+  forkJoin(observables).subscribe((results:any) => {
+    results.forEach((data:any) => {
+      publicaciones = publicaciones.concat(data);
+    });
+    this.publicaciones = this.shuffleArray(publicaciones);
+    console.log("publicaciones",this.publicaciones)
+  });
+  }
+
+  shuffleArray(array: any[]): any[] {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   }
 
   getUsusSeguidos() {

@@ -37,18 +37,18 @@
   </div>
 </div>
 
-<div class="publicaciones">
+<div class="publicaciones" >
   <!-- Prototipo de Publicación -->
-  <div class="publication-card">
+  <div class="publication-card" *ngFor="let publicacion of publicaciones" >
     <div class="publication-header">
       <img class="avatar" src="https://via.placeholder.com/50" alt="Avatar">
       <div class="user-info">
-        <span class="username">juanperez</span>
+        <span class="username">{{publicacion.id}}</span>
         <span class="time">2h</span>
       </div>
     </div>
     <div class="publication-image-wrapper">
-      <img class="publication-image" src="https://via.placeholder.com/300" alt="Publication Image">
+      <img class="publication-image" [src]="publicacion.contenido" alt="Publication Image">
     </div>
     <div class="publication-footer">
       <div class="publication-actions">
