@@ -47,7 +47,7 @@ export class IniSesionComponent implements OnInit {
           subscribe(infoUsu => {
             console.log("usu", infoUsu);
             sessionStorage.setItem('usuario', JSON.stringify(infoUsu)); // Almacena el usuario en sessionStorage
-            window.location.href = '/home'; // Redireccionar al home page después de iniciar sesión
+             window.location.href = '/home'; // Redireccionar al home page después de iniciar sesión
           }, (error: any) => {
             console.error("Error en la obtención de la información del usuario: ", error);
             Swal.fire({

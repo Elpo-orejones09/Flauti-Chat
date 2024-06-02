@@ -12,7 +12,7 @@
       <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
         <!-- Mostrar los usuarios filtrados -->
         <div *ngFor="let user of filteredUsers">
-          {{user.email}}
+          {{user.nombre}}
           <button *ngIf="!user.follow" class="follow-button" (click)="followPeople(user.id)">Seguir</button>
           <button *ngIf="user.follow" class="unfollow-button" (click)="unfollowPeople(user.id)">Siguiendo</button>
         </div>
@@ -53,8 +53,7 @@
     <div class="publication-footer">
       <div class="publication-actions">
         <button class="like-button">Like</button>
-        <button class="comment-button">Comentario</button>
-        <button class="share-button">Compartir</button>
+        <button class="comment-button" (click)="goToDetalles(publicacion.id)">Comentario</button>
       </div>
       <div class="publication-caption">
         <span class="username">juanperez</span>

@@ -13,10 +13,10 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 })
 export class RegistroComponent implements OnInit {
   datos: any = {
-    email: '',
-    contrasena: '',
-    contrasena2: '',
-    nombre: ''
+    email: null,
+    contrasena: null,
+    contrasena2: null,
+    nombre: null
   };
 
   fecha:string = Date();
@@ -61,6 +61,10 @@ export class RegistroComponent implements OnInit {
 
   async redirectTo(url: string) {
     if (this.datos.contrasena === this.datos.contrasena2) {
+      if(this.datos.user){
+      this.authService.getUserName(this.datos.user).
+      subscribe(async data => {
+      if(data.length<=0){
       try {
         console.log("this.Datos ", this.datos);
         this.updateTime();
@@ -82,10 +86,9 @@ export class RegistroComponent implements OnInit {
               icon: "success",
               title: "Registro exitoso",
               text: "Usuario registrado correctamente",
+            }).then(()=>{
+              window.location.href = url; 
             });
-            // Redirigir al usuario después del registro exitoso
-            // this.router.navigate([url]); // Descomentar para usar el enrutador Angular
-            window.location.href = url; // Alternativa para redirigir usando JavaScript
           },
           error: (error: HttpErrorResponse) => {
             console.error("Error en el registro: ", error);
@@ -110,6 +113,21 @@ export class RegistroComponent implements OnInit {
           icon: "error",
           title: "Error",
           text: "Hubo un problema al subir el archivo o al obtener la URL de descarga.",
+        });
+      }
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "Ya existe un usuario con ese nombre de usuario",
+          text: "Prueba a cambiar el nombre de usuario",
+        })
+      }
+    })
+      }else{
+        Swal.fire({
+          icon: "error",
+          title: "No has introducido el nombre de usuario",
+          text: "No se puede crear un usuario sin tener un nombre de usuario",
         });
       }
     } else {

@@ -29,6 +29,19 @@ app.get('/api/usuarios', (req, res) => {
   });
 });
 
+//buscar usuarios por su nombre
+app.get('/api/usuarios/:nombre', (req, res) => {
+  const nombre = req.params.nombre;
+  connection.query('SELECT * FROM usuarios WHERE nombre = ?',nombre ,(err, results) => {
+    if (err) {
+      console.error('Error al obtener usuarios:', err);
+      res.status(500).json({ error: 'Error al obtener usuarios' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
 app.get("/api/usuarios/no/:id", (req, res) => {
   const user = req.params.id;
   connection.query('SELECT * FROM usuarios WHERE id != ?', [user], (err, results) => {
@@ -41,11 +54,9 @@ app.get("/api/usuarios/no/:id", (req, res) => {
   });
 });
 
-
-
 // Endpoint para iniciar sesión
-app.get('/api/usuarios/iniSesion', (req, res) => {
-  const email = req.query.email;
+app.get('/api/usuarios/iniSesion/:email', (req, res) => {
+  const email = req.params.email;
   connection.query('SELECT * FROM usuarios WHERE email=?', email, (err, results) => {
     if (err) {
       console.error('Error al buscar usuario en la base de datos:', err);
@@ -114,6 +125,19 @@ app.get('/api/publicaciones/usuario/:id', (req, res) => {
   });
 });
 
+app.get('/api/publicaciones/:id', (req, res) => {
+  const publicacion = req.params.id;
+  connection.query('SELECT * FROM publicaciones WHERE id = ?',[publicacion], (err, results) => {
+    if (err) {
+      console.error('Error al buscar usuario en la base de datos:', err);
+      res.status(500).json({ error: 'Error al iniciar sesión' });
+      return;
+    } else {
+      res.json(results);
+    }
+  });
+});
+
 app.post('/api/publicaciones', (req, res) => {
   const publicacion = {
     usuario_id: req.body.usuario_id,
@@ -130,6 +154,7 @@ app.post('/api/publicaciones', (req, res) => {
   });
 });
 
+//eliminar publicaiones
 app.delete('/api/publicaciones/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('DELETE FROM publicaciones WHERE id = ?', [publicacion], (err, results) => {
@@ -192,6 +217,35 @@ app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
       return;
     }
     res.json({ message: 'Seguido eliminado correctamente' });
+  });
+});
+
+app.get('/api/comentarios/publicacion/:id', (req, res) => {
+  const publicacion = req.params.id;
+  connection.query('SELECT * FROM comentarios WHERE publicacion_id = ?', publicacion, (err, results) => {
+    if (err) {
+      console.error('Error al obtener comentarios:', err);
+      res.status(500).json({ error: 'Error al obtener comentarios' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/api/comentarios', (req, res) => {
+  const comentario = {
+    usuario_id: req.body.usuario_id,
+    publicacion_id: req.body.publicacion_id,
+    contenido:req.body.contenido,
+    fecha_comentario: Date()
+  }
+  connection.query('INSERT INTO comentarios SET ?', comentario, (err, results) => {
+    if (err) {
+      console.error('Error al insertar comentario a la base de datos', err);
+      res.status(500).json({ error: 'error al insertar comentario' });
+      return;
+    }
+    res.json({ message: 'comentado correctamente', id: results });
   });
 });
 

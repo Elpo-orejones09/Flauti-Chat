@@ -6,7 +6,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -41,12 +41,12 @@ export class HomePage implements OnInit {
   isContentVisible: boolean = false;
   keepVisible: boolean = false;
 
-  constructor(private router: Router, private homeService: HomdService, private userService: UserService) { }
+  constructor(private router: Router, private homeService: HomdService, private userService: UserService,private location: Location) { }
 
   async ngOnInit() {
     this.usuario = sessionStorage.getItem('usuario');
     this.usuario = JSON.parse(this.usuario);
-    console.log(this.usuario);
+    console.log("string usuario",sessionStorage.getItem('usuario'))
     if (!this.usuario) {
       window.location.href = "/iniSesion";
     }
@@ -122,7 +122,7 @@ export class HomePage implements OnInit {
 
   get filteredUsers() {
     return this.allUsers.filter(user =>
-      user.email.toLowerCase().includes(this.searchTerm.toLowerCase())
+      user.nombre.toLowerCase().includes(this.searchTerm.toLowerCase())
     );
   }
 
@@ -139,6 +139,7 @@ export class HomePage implements OnInit {
   } */
 
   followPeople(seguido_id:number){
+    console.log("seguidoId",seguido_id);
     this.userService.createSeguidor(this.usuario.id,seguido_id).subscribe(()=>{
       const i = this.allUsers.findIndex(user => user.id === seguido_id);
       this.allUsers[i].follow=true;
@@ -185,6 +186,12 @@ export class HomePage implements OnInit {
     this.allUsers = [...noSeguidos, ...seguidos];
 
     console.log("usuariosAll", this.allUsers);
-}
+  }
+
+  goToDetalles(id:number){
+    console.log("detalles", id)
+    window.location.href = `/fotoDetalle` ;
+  }
+
 }
 

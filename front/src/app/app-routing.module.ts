@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, importProvidersFrom } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 //Aqui cargamos todas las rutas, no es necesario tener un archivo routing para cada componente tenemos un archivo de rutas a nivel global y las inyectamos
 const routes: Routes = [
@@ -17,6 +17,10 @@ const routes: Routes = [
   {
     path: 'userProfile',
     loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileComponentPageModule)
+  },
+  {
+    path: 'fotoDetalle',
+    loadChildren: () => import('./publicaciones/publicaciones.module').then(m => m.PublicacionesModule)
   },
   {
     path: '',

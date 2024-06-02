@@ -10,6 +10,12 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+
+  getUserName(nombre:string):Observable<any>{
+    const url = `${this.apiUrl}/usuarios/${nombre}`;
+    return this.http.get(url);
+  }
+
   // Registro de usuario
   registUsu(email: string, password: string, nombre: string, foto: string): Observable<any> {
     const usuario = {
@@ -21,6 +27,6 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/usuarios`, usuario);
   }
   iniSesion(email:any): Observable<any> {
-    return this.http.get(`${this.apiUrl}/usuarios/iniSesion?email=${email}`);
+    return this.http.get(`${this.apiUrl}/usuarios/iniSesion/${email}`);
   }
 }
