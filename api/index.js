@@ -220,6 +220,7 @@ app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
   });
 });
 
+//comentarios
 app.get('/api/comentarios/publicacion/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('SELECT * FROM comentarios WHERE publicacion_id = ?', publicacion, (err, results) => {
@@ -246,6 +247,64 @@ app.post('/api/comentarios', (req, res) => {
       return;
     }
     res.json({ message: 'comentado correctamente', id: results });
+  });
+});
+
+
+//likes
+
+app.get('/api/likes/publicacion/:id', (req, res) => {
+  const publicacion = req.params.id;
+  connection.query('SELECT * FROM likes WHERE publicacion_id = ?', publicacion, (err, results) => {
+    if (err) {
+      console.error('Error al obtener likes:', err);
+      res.status(500).json({ error: 'Error al obtener likes' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+
+app.get('/api/likes/usuario/:id', (req, res) => {
+  const usuario = req.params.id;
+  connection.query('SELECT * FROM likes WHERE usuario_id = ?', usuario, (err, results) => {
+    if (err) {
+      console.error('Error al obtener likes:', err);
+      res.status(500).json({ error: 'Error al obtener likes' });
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/api/likes', (req, res) => {
+  const like = {
+    usuario_id: req.body.usuario_id,
+    publicacion_id: req.body.publicacion_id,
+    fecha_like: Date()
+  }
+  connection.query('INSERT INTO likes SET ?', like, (err, results) => {
+    if (err) {
+      console.error('Error al insertar like a la base de datos', err);
+      res.status(500).json({ error: 'error al insertar like' });
+      return;
+    }
+    res.json({ message: 'Like dado correctamente', id: results });
+  });
+});
+
+
+app.delete('/api/likes/:usuario_id/:publicacion_id', (req, res) => {
+  const seguidor = req.params.usuario_id;
+  const seguido = req.params.publicacion_id;
+  connection.query('DELETE FROM seguir WHERE seguidor_id = ? AND seguido_id = ?', [seguidor, seguido], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar usuarios:', err);
+      res.status(500).json({ error: 'Error al eliminar usuarios' });
+      return;
+    }
+    res.json({ message: 'Seguido eliminado correctamente' });
   });
 });
 

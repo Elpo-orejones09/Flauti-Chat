@@ -8,7 +8,8 @@ import { initializeApp } from 'firebase/app';
   styleUrls: ['./publicaciones.component.scss'],
 })
 export class PublicacionesComponent implements OnInit {
-  publicaciones: any[] = [];
+
+  publicacion : any = [];
   //conf firebase
   app: any;
   fileData: any;
@@ -29,14 +30,14 @@ export class PublicacionesComponent implements OnInit {
 
   ngOnInit(): void {
     this.app = initializeApp(this.firebaseConfig);
-    this.loadPublicaciones();
+    /* this.loadPublicaciones(); */
   }
 
-  async loadPublicaciones() {
+ /*  async loadPublicaciones() {
     const db = getFirestore(this.app);
     const q = query(collection(db, "publicaciones"));
     const querySnapshot = await getDocs(q);
     this.publicaciones = querySnapshot.docs.map(doc => doc.data());
-  }
+  } */
 }
 

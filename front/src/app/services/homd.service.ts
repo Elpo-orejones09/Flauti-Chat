@@ -29,4 +29,7 @@ export class HomdService {
     const url = `${this.apiUrl}/publicaciones/usuario/${user_id}`;
     return this.http.get(url);
   }
+
+  getLikes()
+
 }

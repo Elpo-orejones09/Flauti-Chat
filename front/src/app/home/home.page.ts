@@ -190,7 +190,7 @@ export class HomePage implements OnInit {
 
   goToDetalles(id:number){
     console.log("detalles", id)
-    window.location.href = `/fotoDetalle` ;
+    window.location.href = `/fotoDetalle`;
   }
 
 }
