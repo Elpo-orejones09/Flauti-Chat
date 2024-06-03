@@ -19,9 +19,11 @@ export class HomePage implements OnInit {
   allUsers: any[] = [];
   searchTerm: string = '';
 
-  follows :any;
+  follows: any;
 
-  publicaciones:any;
+  likes: any;
+
+  publicaciones: any;
 
   usuario: any;
   app: any;
@@ -41,12 +43,12 @@ export class HomePage implements OnInit {
   isContentVisible: boolean = false;
   keepVisible: boolean = false;
 
-  constructor(private router: Router, private homeService: HomdService, private userService: UserService,private location: Location) { }
+  constructor(private router: Router, private homeService: HomdService, private userService: UserService, private location: Location) { }
 
   async ngOnInit() {
     this.usuario = sessionStorage.getItem('usuario');
     this.usuario = JSON.parse(this.usuario);
-    console.log("string usuario",sessionStorage.getItem('usuario'))
+    console.log("string usuario", sessionStorage.getItem('usuario'))
     if (!this.usuario) {
       window.location.href = "/iniSesion";
     }
@@ -57,18 +59,22 @@ export class HomePage implements OnInit {
       },
       error: (error) => {
         console.error('Error fetching users', error);
-      } 
+      }
     });
     this.userService.getSeguidos(this.usuario.id).subscribe(data => {
       this.follows = data;
       this.getUsusSeguidos();
-      this.getFollowPublicaciones();
-    })
+      this.homeService.getLikesUsu(this.usuario.id).subscribe(async data => {
+        this.likes = data;
+        this.getFollowPublicaciones();
+      });
+    });
 
-      
+
+
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
-    
+
   }
 
   obtenerArchivo(e: any) {
@@ -126,46 +132,37 @@ export class HomePage implements OnInit {
     );
   }
 
-  /* async loadUserProfile(email: string) {
-    const db = getFirestore(this.app);
-    const userDocRef = doc(db, "users", email);
-    const userDoc = await getDoc(userDocRef);
 
-    if (userDoc.exists()) {
-      this.usuario = userDoc.data();
-    } else {
-      console.error("No user document found!");
-    }
-  } */
-
-  followPeople(seguido_id:number){
-    console.log("seguidoId",seguido_id);
-    this.userService.createSeguidor(this.usuario.id,seguido_id).subscribe(()=>{
+  followPeople(seguido_id: number) {
+    console.log("seguidoId", seguido_id);
+    this.userService.createSeguidor(this.usuario.id, seguido_id).subscribe(() => {
       const i = this.allUsers.findIndex(user => user.id === seguido_id);
-      this.allUsers[i].follow=true;
+      this.allUsers[i].follow = true;
     })
   }
 
-  unfollowPeople(seguido_id:number){
-    this.userService.deleteSeguidor(this.usuario.id,seguido_id).subscribe(()=>{
+  unfollowPeople(seguido_id: number) {
+    this.userService.deleteSeguidor(this.usuario.id, seguido_id).subscribe(() => {
       const i = this.allUsers.findIndex(user => user.id === seguido_id);
       this.allUsers[i].follow = false;
     })
   }
 
-  async getFollowPublicaciones(){
+  async getFollowPublicaciones() {
     let publicaciones: any[] = [];
-  const observables = this.follows.map((seguidos:any) =>
-    this.homeService.getPublicacionesUsuarios(seguidos.seguido_id)
-  );
+    const observables = this.follows.map((seguidos: any) =>
+      this.homeService.getPublicacionesUsuarios(seguidos.seguido_id)
+    );
 
-  forkJoin(observables).subscribe((results:any) => {
-    results.forEach((data:any) => {
-      publicaciones = publicaciones.concat(data);
+    forkJoin(observables).subscribe((results: any) => {
+      results.forEach((data: any) => {
+        publicaciones = publicaciones.concat(data);
+      });
+      this.publicaciones=publicaciones;
+      this.getPublicacionesConLike();
+      this.publicaciones = this.shuffleArray(this.publicaciones);
+      console.log("publicaciones", this.publicaciones)
     });
-    this.publicaciones = this.shuffleArray(publicaciones);
-    console.log("publicaciones",this.publicaciones)
-  });
   }
 
   shuffleArray(array: any[]): any[] {
@@ -177,20 +174,37 @@ export class HomePage implements OnInit {
   }
 
   getUsusSeguidos() {
-    const seguidos = this.allUsers.filter(user => this.follows.some((follow:any) => follow.seguido_id === user.id));
-    const noSeguidos = this.allUsers.filter(user => !this.follows.some((follow:any) => follow.seguido_id === user.id));
+    const seguidos = this.allUsers.filter(user => this.follows.some((follow: any) => follow.seguido_id === user.id));
+    const noSeguidos = this.allUsers.filter(user => !this.follows.some((follow: any) => follow.seguido_id === user.id));
 
     noSeguidos.forEach(user => user.follow = false);
     seguidos.forEach(user => user.follow = true);
 
     this.allUsers = [...noSeguidos, ...seguidos];
-
-    console.log("usuariosAll", this.allUsers);
   }
 
-  goToDetalles(id:number){
+  getPublicacionesConLike() {
+    console.log("antes del errro",this.publicaciones)
+    const likedPosts = this.publicaciones.filter((post:any) => this.likes.some((like: any) => like.publicacion_id === post.id));
+    const notLikedPosts = this.publicaciones.filter((post:any) => !this.likes.some((like: any) => like.publicaion_id === post.id));
+    notLikedPosts.forEach((post:any) => post.liked = false);
+    likedPosts.forEach((post:any) => post.liked = true);
+
+    this.publicaciones = notLikedPosts;
+    console.log('publicaciones con like',this.publicaciones);
+  }
+
+  goToDetalles(id: number) {
     console.log("detalles", id)
     window.location.href = `/fotoDetalle`;
+  }
+
+  darLike(publicacion_id: number) {
+    console.log("suario", this.usuario.id, "a publicación", publicacion_id);
+    this.homeService.postLike(publicacion_id, this.usuario.id).subscribe(() => { 
+      const i = this.publicaciones.findIndex((publicacion:any) => publicacion.id === publicacion_id);
+      this.publicaciones[i].liked = true;
+    })
   }
 
 }

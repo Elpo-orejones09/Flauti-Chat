@@ -30,6 +30,19 @@ export class HomdService {
     return this.http.get(url);
   }
 
-  getLikes()
+  getLikesUsu(usuario_id:number):Observable<any>{
+    const url = `${this.apiUrl}/likes/usuario/${usuario_id}`;
+    return this.http.get(url);
+  }
+
+  postLike(publicacion_id:number, usuario_id:number):Observable<any>{
+    const url= `${this.apiUrl}/likes`;
+    const content = {
+      publicacion_id : publicacion_id,
+      usuario_id : usuario_id
+    }
+
+    return this.http.post(url , content);
+  }
 
 }

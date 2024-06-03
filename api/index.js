@@ -265,7 +265,6 @@ app.get('/api/likes/publicacion/:id', (req, res) => {
   });
 });
 
-
 app.get('/api/likes/usuario/:id', (req, res) => {
   const usuario = req.params.id;
   connection.query('SELECT * FROM likes WHERE usuario_id = ?', usuario, (err, results) => {
