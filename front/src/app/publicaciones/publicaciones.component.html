@@ -1,9 +1,8 @@
-
-  <div *ngIf="publicacion" class="publication-detail-card">
+<div *ngIf="publicacion" class="publication-detail-card">
   <div class="publication-header">
     <img class="avatar" [src]="publicacion.avatar || 'https://via.placeholder.com/50'" alt="Avatar">
     <div class="user-info">
-      <span class="username">{{publicacion.usuario}}</span>
+      <span class="username">{{ publicacion.usuario }}</span>
       <span class="time">2h</span>
     </div>
   </div>
@@ -16,14 +15,19 @@
       <button class="comment-button">Comentario</button>
     </div>
     <div class="publication-caption">
-      <span class="username">{{publicacion.usuario}}</span>
-      <span>{{publicacion.descripcion}}</span>
+      <span class="username">{{ publicacion.usuario }}</span>
+      <span>{{ publicacion.descripcion }}</span>
     </div>
     <div class="publication-comments">
       <div *ngFor="let comment of publicacion.comentarios" class="comment">
-        <span class="username">{{comment.username}}</span>
-        <span>{{comment.text}}</span>
+        <span class="username">{{ comment.username }}</span>
+        <span>{{ comment.text }}</span>
       </div>
     </div>
+    <div class="comment-section">
+      <textarea [(ngModel)]="nuevoComentario" placeholder="Añadir un comentario..."></textarea>
+      <button class="comment-submit-button" (click)="addComment()">Comentar</button>
+    </div>
   </div>
-</div> 
+</div>
+

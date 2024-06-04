@@ -253,3 +253,31 @@ header button {
   color: #9b30ff;
   border: 2px solid #9b30ff;
 }
+.comment-section {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment-section textarea {
+  flex-grow: 1;
+  resize: none;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.comment-submit-button {
+  background-color: var(--color-primario);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.comment-submit-button:hover {
+  background-color: darken(var(--color-primario), 10%);
+}

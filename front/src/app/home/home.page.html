@@ -47,12 +47,14 @@
         <span class="time">2h</span>
       </div>
     </div>
-    <div class="publication-image-wrapper"> <!-- (click)="redirectTo('/fotoDetalle')" Puede ser que esto lo tengas que poner en el image-wrapper-->
+    <div class="publication-image-wrapper">
       <img class="publication-image" [src]="publicacion.contenido" alt="Publication Image">
     </div>
     <div class="publication-footer">
       <div class="publication-actions">
-        <div class="like-button"><img  *ngIf="!publicacion.liked" width="50px" src="../../assets/img/me-gusta.png" (click)="darLike(publicacion.id)"><img  *ngIf="publicacion.liked" width="50px" src="../../assets/img/me-gusta-dado.png"></div>
+        <div class="like-button"><img *ngIf="!publicacion.liked" width="50px" src="../../assets/img/me-gusta.png"
+            (click)="darLike(publicacion.id)"><img *ngIf="publicacion.liked" width="50px"
+            src="../../assets/img/me-gusta-dado.png"></div>
         <button class="comment-button" (click)="goToDetalles(publicacion.id)">Comentario</button>
       </div>
       <div class="publication-caption">
@@ -68,6 +70,10 @@
           <span class="username">user2</span>
           <span>Me encantaría estar allí.</span>
         </div>
+      </div>
+      <div class="comment-section">
+        <textarea [(ngModel)]="nuevoComentario" placeholder="Añadir un comentario..."></textarea>
+        <button class="comment-submit-button" (click)="addComment(publicacion.id)">Comentar</button>
       </div>
     </div>
   </div>
