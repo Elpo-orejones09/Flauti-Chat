@@ -54,7 +54,7 @@
       <div class="publication-actions">
         <div class="like-button"><img *ngIf="!publicacion.liked" width="50px" src="../../assets/img/me-gusta.png"
             (click)="darLike(publicacion.id)"><img *ngIf="publicacion.liked" width="50px"
-            src="../../assets/img/me-gusta-dado.png"></div>
+            src="../../assets/img/me-gusta-dado.png" (click)="quitarLike(publicacion.id)"></div>
         <button class="comment-button" (click)="goToDetalles(publicacion.id)">Comentario</button>
       </div>
       <div class="publication-caption">
@@ -71,10 +71,10 @@
           <span>Me encantaría estar allí.</span>
         </div>
       </div>
-      <div class="comment-section">
+      <!-- <div class="comment-section">
         <textarea [(ngModel)]="nuevoComentario" placeholder="Añadir un comentario..."></textarea>
         <button class="comment-submit-button" (click)="addComment(publicacion.id)">Comentar</button>
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

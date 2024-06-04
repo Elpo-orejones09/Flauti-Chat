@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
+import { HomdService } from '../services/homd.service';
 
 @Component({
   selector: 'app-publicaciones',
@@ -8,8 +9,8 @@ import { initializeApp } from 'firebase/app';
   styleUrls: ['./publicaciones.component.scss'],
 })
 export class PublicacionesComponent implements OnInit {
-
-  publicacion : any = [];
+  nuevoComentario:any = {};
+  publicacion : any ;
   //conf firebase
   app: any;
   fileData: any;
@@ -26,18 +27,23 @@ export class PublicacionesComponent implements OnInit {
     measurementId: "G-DGE79KQPRV"
   }
 
-  constructor() { }
+  constructor(private publicacionService:HomdService ) { }
 
   ngOnInit(): void {
-    this.app = initializeApp(this.firebaseConfig);
-    /* this.loadPublicaciones(); */
+    const id = sessionStorage.getItem("publicaionSeleccionada");
+    if (id !== null) {
+      const id_publi: number = +id; 
+      this.publicacionService.getPublicacion(id_publi).subscribe(data=>{
+        this.publicacion = data[0];
+        console.log(this.publicacion)
+      })
+  } else {
+    window.location.href = "/home"
   }
+}
 
- /*  async loadPublicaciones() {
-    const db = getFirestore(this.app);
-    const q = query(collection(db, "publicaciones"));
-    const querySnapshot = await getDocs(q);
-    this.publicaciones = querySnapshot.docs.map(doc => doc.data());
-  } */
+  addComment(){
+
+  }
 }
 

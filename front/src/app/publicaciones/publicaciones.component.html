@@ -12,7 +12,6 @@
   <div class="publication-footer">
     <div class="publication-actions">
       <button class="like-button">Like</button>
-      <button class="comment-button">Comentario</button>
     </div>
     <div class="publication-caption">
       <span class="username">{{ publicacion.usuario }}</span>
@@ -25,7 +24,7 @@
       </div>
     </div>
     <div class="comment-section">
-      <textarea [(ngModel)]="nuevoComentario" placeholder="Añadir un comentario..."></textarea>
+      <textarea placeholder="Añadir un comentario..."></textarea>
       <button class="comment-submit-button" (click)="addComment()">Comentar</button>
     </div>
   </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class HomdService {
     return this.http.get(`${this.apiUrl}/usuarios/no/${id}`);
   }
 
-  getPublicaciones(){
-    //coger publicaciones por id de usuario
+  getPublicacion(id:number):Observable<any>{
+    const url = `${this.apiUrl}/publicaciones/${id}`;
+    return this.http.get(url);
   }
 
   postPublicacion(usuario_id:any, contenido:any,):Observable<any>{
@@ -43,6 +45,13 @@ export class HomdService {
     }
 
     return this.http.post(url , content);
+  }
+
+  deleteLike(publicacion_id:number, usuario_id:number):Observable<any>{
+   // /api/likes/:usuario_id/:publicacion_id
+    const url = `${this.apiUrl}/likes/${usuario_id}/${publicacion_id}`;
+
+    return this.http.delete(url);
   }
 
 }

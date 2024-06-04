@@ -295,15 +295,15 @@ app.post('/api/likes', (req, res) => {
 
 
 app.delete('/api/likes/:usuario_id/:publicacion_id', (req, res) => {
-  const seguidor = req.params.usuario_id;
-  const seguido = req.params.publicacion_id;
-  connection.query('DELETE FROM seguir WHERE seguidor_id = ? AND seguido_id = ?', [seguidor, seguido], (err, results) => {
+  const usuario_id = req.params.usuario_id;
+  const publicacion_id = req.params.publicacion_id;
+  connection.query('DELETE FROM likes WHERE usuario_id = ? AND publicacion_id = ?', [usuario_id, publicacion_id], (err, results) => {
     if (err) {
-      console.error('Error al eliminar usuarios:', err);
-      res.status(500).json({ error: 'Error al eliminar usuarios' });
+      console.error('Error al eliminar likes:', err);
+      res.status(500).json({ error: 'Error al eliminar likes' });
       return;
     }
-    res.json({ message: 'Seguido eliminado correctamente' });
+    res.json({ message: 'Like eliminado correctamente' });
   });
 });
 

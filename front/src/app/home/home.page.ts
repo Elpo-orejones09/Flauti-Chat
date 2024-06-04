@@ -189,13 +189,14 @@ export class HomePage implements OnInit {
     const notLikedPosts = this.publicaciones.filter((post:any) => !this.likes.some((like: any) => like.publicaion_id === post.id));
     notLikedPosts.forEach((post:any) => post.liked = false);
     likedPosts.forEach((post:any) => post.liked = true);
-
     this.publicaciones = notLikedPosts;
     console.log('publicaciones con like',this.publicaciones);
   }
 
   goToDetalles(id: number) {
     console.log("detalles", id)
+    const id_publi = `${id}`;
+    sessionStorage.setItem("publicaionSeleccionada", id_publi)
     window.location.href = `/fotoDetalle`;
   }
 
@@ -204,6 +205,13 @@ export class HomePage implements OnInit {
     this.homeService.postLike(publicacion_id, this.usuario.id).subscribe(() => { 
       const i = this.publicaciones.findIndex((publicacion:any) => publicacion.id === publicacion_id);
       this.publicaciones[i].liked = true;
+    })
+  }
+
+  quitarLike(publicacion_id:number){
+    this.homeService.deleteLike(publicacion_id, this.usuario.id).subscribe(()=>{
+      const i = this.publicaciones.findIndex((publicacion:any) => publicacion.id === publicacion_id);
+      this.publicaciones[i].liked = false;
     })
   }
 
