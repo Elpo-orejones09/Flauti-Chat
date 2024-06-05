@@ -41,9 +41,9 @@
   <!-- Prototipo de Publicación -->
   <div class="publication-card" *ngFor="let publicacion of publicaciones">
     <div class="publication-header">
-      <img class="avatar" src="https://via.placeholder.com/50" alt="Avatar">
+      <img class="avatar" src="{{getUsuPerfil(publicacion.usuario_id) || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'}}" alt="Avatar">
       <div class="user-info">
-        <span class="username">{{publicacion.id}}</span>
+        <span class="username">{{ getUsuPublicacion(publicacion.usuario_id)}}</span>
         <span class="time">2h</span>
       </div>
     </div>
@@ -52,29 +52,11 @@
     </div>
     <div class="publication-footer">
       <div class="publication-actions">
-        <div class="like-button"><img *ngIf="!publicacion.liked" width="50px" src="../../assets/img/me-gusta.png"
-            (click)="darLike(publicacion.id)"><img *ngIf="publicacion.liked" width="50px"
+        <div class="like-button"><img *ngIf="!publicacion.liked" width="60px" src="../../assets/img/me-gusta.png"
+            (click)="darLike(publicacion.id)"><img *ngIf="publicacion.liked" width="60px"
             src="../../assets/img/me-gusta-dado.png" (click)="quitarLike(publicacion.id)"></div>
-        <button class="comment-button" (click)="goToDetalles(publicacion.id)">Comentario</button>
+            <div><img src="../../assets/img/comentario.png" class="comment-button" (click)="goToDetalles(publicacion.id)" width="60px"></div>
       </div>
-      <div class="publication-caption">
-        <span class="username">juanperez</span>
-        <span>Un día en la playa</span>
-      </div>
-      <div class="publication-comments">
-        <div class="comment">
-          <span class="username">user1</span>
-          <span>¡Qué bonito lugar!</span>
-        </div>
-        <div class="comment">
-          <span class="username">user2</span>
-          <span>Me encantaría estar allí.</span>
-        </div>
-      </div>
-      <!-- <div class="comment-section">
-        <textarea [(ngModel)]="nuevoComentario" placeholder="Añadir un comentario..."></textarea>
-        <button class="comment-submit-button" (click)="addComment(publicacion.id)">Comentar</button>
-      </div> -->
     </div>
   </div>
 </div>

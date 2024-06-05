@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { observableToBeFn } from 'rxjs/internal/testing/TestScheduler';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +51,11 @@ export class HomdService {
     const url = `${this.apiUrl}/likes/${usuario_id}/${publicacion_id}`;
 
     return this.http.delete(url);
+  }
+
+  getUserById(id:number):Observable<any>{
+    const url = `${this.apiUrl}/usuarios/id/${id}`;
+    return this.http.get(url);
   }
 
 }

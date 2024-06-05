@@ -18,13 +18,13 @@
       <span>{{ publicacion.descripcion }}</span>
     </div>
     <div class="publication-comments">
-      <div *ngFor="let comment of publicacion.comentarios" class="comment">
-        <span class="username">{{ comment.username }}</span>
-        <span>{{ comment.text }}</span>
+      <div *ngFor="let comment of comentariosPublicacion" class="comment">
+        <span class="username">{{ usuarioNombres[comment.usuario_id] }}</span>
+        <span>{{ comment.contenido}}</span>
       </div>
     </div>
     <div class="comment-section">
-      <textarea placeholder="Añadir un comentario..."></textarea>
+      <textarea id="comentarioTextBox" placeholder="Añadir un comentario..." [(ngModel)]="nuevoComentario"></textarea>
       <button class="comment-submit-button" (click)="addComment()">Comentar</button>
     </div>
   </div>

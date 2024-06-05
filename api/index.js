@@ -68,6 +68,19 @@ app.get('/api/usuarios/iniSesion/:email', (req, res) => {
   });
 });
 
+app.get('/api/usuarios/id/:id', (req, res) => {
+  console.log("pasa por el usuario")
+  const id = req.params.id;
+  connection.query('SELECT * FROM usuarios WHERE id=?', [id], (err, results) => {
+    if (err) {
+      console.error('Error al buscar usuario en la base de datos:', err);
+      res.status(500).json({ error: 'Error al buscar usuario' });
+      return;
+    } else {
+      res.json(results[0]);
+    }
+  });
+});
 
 // Crear usuario
 app.post('/api/usuarios', (req, res) => {

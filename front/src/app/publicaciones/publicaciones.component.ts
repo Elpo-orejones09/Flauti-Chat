@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { HomdService } from '../services/homd.service';
+import { PublicacionService } from '../services/publicacion.service';
 
 @Component({
   selector: 'app-publicaciones',
@@ -9,8 +10,12 @@ import { HomdService } from '../services/homd.service';
   styleUrls: ['./publicaciones.component.scss'],
 })
 export class PublicacionesComponent implements OnInit {
-  nuevoComentario:any = {};
+  nuevoComentario = '';
+  usuarioNombres:any=[];
   publicacion : any ;
+  usuario:any;
+  comentariosPublicacion:any[]=[];
+
   //conf firebase
   app: any;
   fileData: any;
@@ -27,23 +32,57 @@ export class PublicacionesComponent implements OnInit {
     measurementId: "G-DGE79KQPRV"
   }
 
-  constructor(private publicacionService:HomdService ) { }
+  constructor(private publicacionService:HomdService , private publicacionesService:PublicacionService) { }
 
   ngOnInit(): void {
+    this.usuario = sessionStorage.getItem('usuario');
+    this.usuario = JSON.parse(this.usuario);
+    console.log("string usuario", sessionStorage.getItem('usuario'))
+    if (!this.usuario) {
+      window.location.href = "/iniSesion";
+    }
     const id = sessionStorage.getItem("publicaionSeleccionada");
     if (id !== null) {
       const id_publi: number = +id; 
       this.publicacionService.getPublicacion(id_publi).subscribe(data=>{
         this.publicacion = data[0];
         console.log(this.publicacion)
+        this.getComentarios();
       })
   } else {
     window.location.href = "/home"
   }
 }
 
-  addComment(){
+cargarNombresDeUsuarios(data:any) {
+  const usuarioIds = data.map((comentario:any) => comentario.usuario_id);
+  usuarioIds.forEach((id:number) => {
+    if (this.usuarioNombres[id]==undefined) {
+      this.publicacionService.getUserById(id).subscribe(data => {
+        this.usuarioNombres[id] = data.nombre;
+        console.log(data);
+      });
+      
+    }
+  });
+}
 
+
+  getComentarios(){
+    this.publicacionesService.getComentsPublicacion(this.publicacion.id).subscribe(data=>{
+      this.comentariosPublicacion = data;
+      console.log("precomentarios",data)
+      this.cargarNombresDeUsuarios(data);
+      console.log("comentarios",this.comentariosPublicacion)
+    })
+  }
+
+  addComment(){
+    this.publicacionesService.postComent(this.usuario.id, this.publicacion.id, this.nuevoComentario).subscribe(()=>{
+      this.nuevoComentario = "";
+      this.getComentarios();
+    });
+    
   }
 }
 

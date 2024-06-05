@@ -105,6 +105,17 @@ export class HomePage implements OnInit {
 
   }
 
+  getUsuPublicacion(id:number){
+    const user:any =  this.allUsers.filter(user => user.id === id);
+    console.log("usuario publicacion",user);
+    return user[0].nombre;
+  }
+
+  getUsuPerfil(id:number){
+    const user:any = this.allUsers.filter(user => user.id === id);
+    return user[0].fotoPerfil;
+  }
+
   public redirectTo(url: string) {
     window.location.href = url;
   }
