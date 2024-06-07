@@ -7,28 +7,27 @@ import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import { UserService } from '../services/user.service';
 import { forkJoin } from 'rxjs';
 import { Location } from '@angular/common';
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.css'],
 })
 export class HomePage implements OnInit {
+  imageSelected: boolean = false;
   datos: any;
-
   fecha = Date();
   allUsers: any[] = [];
   searchTerm: string = '';
 
   follows: any;
-
   likes: any;
-
   publicaciones: any;
-
   usuario: any;
   app: any;
   storage: any;
   storageRef: any;
+
   firebaseConfig = {
     apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",
     authDomain: "flauti-chat.firebaseapp.com",
@@ -42,6 +41,8 @@ export class HomePage implements OnInit {
 
   isContentVisible: boolean = false;
   keepVisible: boolean = false;
+  
+  menuVisible: boolean = false;
 
   constructor(private router: Router, private homeService: HomdService, private userService: UserService, private location: Location) { }
 
@@ -70,8 +71,6 @@ export class HomePage implements OnInit {
       });
     });
 
-
-
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
 
@@ -96,23 +95,22 @@ export class HomePage implements OnInit {
       console.log('Uploaded a blob or file!', snapshot);
       getDownloadURL(this.storageRef).then(data => {
         console.log("url", data)
-        this.homeService.postPublicacion(this.usuario.id, data).
-          subscribe(data => {
-            console.log("subida exitosa", data);
-          })
+        this.homeService.postPublicacion(this.usuario.id, data).subscribe(data => {
+          console.log("subida exitosa", data);
+        })
       })
     });
 
   }
 
-  getUsuPublicacion(id:number){
-    const user:any =  this.allUsers.filter(user => user.id === id);
-    console.log("usuario publicacion",user);
+  getUsuPublicacion(id: number) {
+    const user: any = this.allUsers.filter(user => user.id === id);
+    console.log("usuario publicacion", user);
     return user[0].nombre;
   }
 
-  getUsuPerfil(id:number){
-    const user:any = this.allUsers.filter(user => user.id === id);
+  getUsuPerfil(id: number) {
+    const user: any = this.allUsers.filter(user => user.id === id);
     return user[0].fotoPerfil;
   }
 
@@ -143,7 +141,6 @@ export class HomePage implements OnInit {
     );
   }
 
-
   followPeople(seguido_id: number) {
     console.log("seguidoId", seguido_id);
     this.userService.createSeguidor(this.usuario.id, seguido_id).subscribe(() => {
@@ -169,7 +166,7 @@ export class HomePage implements OnInit {
       results.forEach((data: any) => {
         publicaciones = publicaciones.concat(data);
       });
-      this.publicaciones=publicaciones;
+      this.publicaciones = publicaciones;
       this.getPublicacionesConLike();
       this.publicaciones = this.shuffleArray(this.publicaciones);
       console.log("publicaciones", this.publicaciones)
@@ -195,13 +192,13 @@ export class HomePage implements OnInit {
   }
 
   getPublicacionesConLike() {
-    console.log("antes del errro",this.publicaciones)
-    const likedPosts = this.publicaciones.filter((post:any) => this.likes.some((like: any) => like.publicacion_id === post.id));
-    const notLikedPosts = this.publicaciones.filter((post:any) => !this.likes.some((like: any) => like.publicaion_id === post.id));
-    notLikedPosts.forEach((post:any) => post.liked = false);
-    likedPosts.forEach((post:any) => post.liked = true);
+    console.log("antes del errro", this.publicaciones)
+    const likedPosts = this.publicaciones.filter((post: any) => this.likes.some((like: any) => like.publicacion_id === post.id));
+    const notLikedPosts = this.publicaciones.filter((post: any) => !this.likes.some((like: any) => like.publicacion_id === post.id));
+    notLikedPosts.forEach((post: any) => post.liked = false);
+    likedPosts.forEach((post: any) => post.liked = true);
     this.publicaciones = notLikedPosts;
-    console.log('publicaciones con like',this.publicaciones);
+    console.log('publicaciones con like', this.publicaciones);
   }
 
   goToDetalles(id: number) {
@@ -213,18 +210,47 @@ export class HomePage implements OnInit {
 
   darLike(publicacion_id: number) {
     console.log("suario", this.usuario.id, "a publicación", publicacion_id);
-    this.homeService.postLike(publicacion_id, this.usuario.id).subscribe(() => { 
-      const i = this.publicaciones.findIndex((publicacion:any) => publicacion.id === publicacion_id);
+    this.homeService.postLike(publicacion_id, this.usuario.id).subscribe(() => {
+      const i = this.publicaciones.findIndex((publicacion: any) => publicacion.id === publicacion_id);
       this.publicaciones[i].liked = true;
     })
   }
 
-  quitarLike(publicacion_id:number){
-    this.homeService.deleteLike(publicacion_id, this.usuario.id).subscribe(()=>{
-      const i = this.publicaciones.findIndex((publicacion:any) => publicacion.id === publicacion_id);
+  quitarLike(publicacion_id: number) {
+    this.homeService.deleteLike(publicacion_id, this.usuario.id).subscribe(() => {
+      const i = this.publicaciones.findIndex((publicacion: any) => publicacion.id === publicacion_id);
       this.publicaciones[i].liked = false;
     })
   }
+  
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+  }
 
+  /*archivoSeleccionado(event: any) {
+    // Verificar si se seleccionó un archivo
+    if (event.target.files.length > 0) {
+      this.imageSelected = true;
+      // Cambiar el texto del input label
+      const label = document.getElementById('fileInputLabel');
+      if (label) {
+        label.innerHTML = 'Archivo seleccionado <img src="tick.png" alt="Tick" width="20px">';
+      }
+    } else {
+      this.imageSelected = false;
+    }
+  }
+
+  eliminarImagen() {
+    // Limpiar el input file y restablecer el texto del label
+    const input = document.getElementById('fileInput') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+      this.imageSelected = false;
+      const label = document.getElementById('fileInputLabel');
+      if (label) {
+        label.innerHTML = 'Subir archivo';
+      }
+    }
+  }*/
 }
-
