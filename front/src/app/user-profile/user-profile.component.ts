@@ -52,5 +52,13 @@ export class UserProfileComponent implements OnInit {
     sessionStorage.removeItem('usuario');
     window.location.href="/iniSesion";
   }
+
+  goToDetalles(id: number) {
+    console.log("detalles", id)
+    const id_publi = `${id}`;
+    sessionStorage.setItem("publicaionSeleccionada", id_publi)
+    window.location.href = `/fotoDetalle`;
+  }
+  
 }
 

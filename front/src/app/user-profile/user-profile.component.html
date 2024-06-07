@@ -22,7 +22,7 @@
   </div>
   <div class="perfil-publicaciones">
     <div *ngFor="let publicacion of publicaciones" class="publicacion">
-      <img [src]="publicacion.contenido" alt="Imagen de la publicación">
+      <img [src]="publicacion.contenido" alt="Imagen de la publicación" style="cursor: pointer;" (click)="goToDetalles(publicacion.id)">
       
     </div>
   </div>  
