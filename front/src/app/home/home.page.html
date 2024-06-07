@@ -1,7 +1,8 @@
 <header>
   <img class="logo" src="assets/img/Logo_fondo_void.png" alt="Logo">
   <div class="container">
-    <input type="text" (focus)="showContent()" (blur)="hideContent()" [(ngModel)]="searchTerm" placeholder="Buscar..." />
+    <input type="text" (focus)="showContent()" (blur)="hideContent()" [(ngModel)]="searchTerm"
+      placeholder="Buscar..." />
     <div class="user-container">
       <div id="content" [class.hidden]="!isContentVisible" (mousedown)="keepContentVisible()">
         <!-- Mostrar los usuarios filtrados -->
@@ -32,7 +33,8 @@
   <!-- Prototipo de Publicación -->
   <div class="publication-card" *ngFor="let publicacion of publicaciones">
     <div class="publication-header">
-      <img class="avatar" [src]="getUsuPerfil(publicacion.usuario_id) || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'"
+      <img class="avatar"
+        [src]="getUsuPerfil(publicacion.usuario_id) || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'"
         alt="Avatar">
       <div class="user-info">
         <span class="username">{{ getUsuPublicacion(publicacion.usuario_id)}}</span>
@@ -45,11 +47,14 @@
     <div class="publication-footer">
       <div class="publication-actions">
         <div class="like-button">
-          <img *ngIf="!publicacion.liked" width="60px" src="../../assets/img/me-gusta.png" (click)="darLike(publicacion.id)">
-          <img *ngIf="publicacion.liked" width="60px" src="../../assets/img/me-gusta-dado.png" (click)="quitarLike(publicacion.id)">
+          <img *ngIf="!publicacion.liked" width="60px" src="../../assets/img/me-gusta.png"
+            (click)="darLike(publicacion.id)">
+          <img *ngIf="publicacion.liked" width="60px" src="../../assets/img/me-gusta-dado.png"
+            (click)="quitarLike(publicacion.id)">
         </div>
         <div>
-          <img src="../../assets/img/comentario.png" class="comment-button" (click)="goToDetalles(publicacion.id)" width="60px">
+          <img src="../../assets/img/comentario.png" class="comment-button" (click)="goToDetalles(publicacion.id)"
+            width="60px">
         </div>
       </div>
     </div>
