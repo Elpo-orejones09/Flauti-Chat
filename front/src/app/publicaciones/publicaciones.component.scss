@@ -75,9 +75,14 @@
   border: none;
   color: #bbb;
   cursor: pointer;
+  display: flex;
+}
+.numLike{
+  font-size: 20px;
+  margin-left: 20px;
+  font-weight: bold;
 }
 
-.like-button:hover,
 .comment-button:hover,
 .share-button:hover {
   color: white;
@@ -139,4 +144,14 @@
 
 .comment-submit-button:hover {
   background-color: var(--color-primario);
+}
+.infoWrap{
+  justify-content: space-between;
+  width: 100%;
+  display: flex;
+}
+.basura{
+  display: block;
+  cursor: pointer;
+  right: 7px;
 }

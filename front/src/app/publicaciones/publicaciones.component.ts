@@ -15,7 +15,9 @@ export class PublicacionesComponent implements OnInit {
   publicacion : any ;
   usuario:any;
   comentariosPublicacion:any[]=[];
-
+  usuarioPublicacion:any;
+  likesPublicacion:any[]=[];
+  likeDado:boolean=false;
   //conf firebase
   app: any;
   fileData: any;
@@ -48,6 +50,19 @@ export class PublicacionesComponent implements OnInit {
         this.publicacion = data[0];
         console.log(this.publicacion)
         this.getComentarios();
+        this.publicacionService.getUserById(this.publicacion.usuario_id).subscribe(userData=>{
+          this.usuarioPublicacion=userData;
+        });
+        this.publicacionService.getLikesPublicacion(id_publi).subscribe(likeData => {
+          this.likesPublicacion = likeData;
+          const like = likeData.filter((item:any) => item.usuario_id === this.usuario.id);
+          if(like.length > 0){
+            this.likeDado =  true;
+          }else{
+            this.likeDado = false;
+          }
+          
+        })
       })
   } else {
     window.location.href = "/home"
@@ -84,5 +99,18 @@ cargarNombresDeUsuarios(data:any) {
     });
     
   }
+  darLike(){
+    this.publicacionService.postLike(this.publicacion.id, this.usuario.id).subscribe(()=>{
+      this.likeDado = true;
+      this.likesPublicacion.length++;
+    })
+  }
+  quitarLike(){
+    this.publicacionService.deleteLike(this.publicacion.id, this.usuario.id).subscribe(()=>{
+      this.likeDado = false;
+      this.likesPublicacion.length--;
+    })
+  }
+
 }
 

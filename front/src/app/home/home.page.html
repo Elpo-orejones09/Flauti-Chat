@@ -44,7 +44,7 @@
       <img class="avatar" src="{{getUsuPerfil(publicacion.usuario_id) || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'}}" alt="Avatar">
       <div class="user-info">
         <span class="username">{{ getUsuPublicacion(publicacion.usuario_id)}}</span>
-        <span class="time">2h</span>
+        <span class="time">{{publicacion.fecha_publicacion | date: 'short'}}</span>
       </div>
     </div>
     <div class="publication-image-wrapper">

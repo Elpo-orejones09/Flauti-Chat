@@ -1,21 +1,24 @@
 <div *ngIf="publicacion" class="publication-detail-card">
   <div class="publication-header">
-    <img class="avatar" [src]="publicacion.avatar || 'https://via.placeholder.com/50'" alt="Avatar">
+    <img class="avatar" [src]="usuarioPublicacion.fotoPerfil || 'https://th.bing.com/th/id/R.baab394b13d90b82e910fe7daffe91d6?rik=j%2fgpEnKUbHUF4Q&riu=http%3a%2f%2fcdn.playbuzz.com%2fcdn%2f913253cd-5a02-4bf2-83e1-18ff2cc7340f%2fc56157d5-5d8e-4826-89f9-361412275c35.jpg&ehk=%2fLjgOG%2bOBkDVenK3gytA6rK4ZjpCTRXBnFQiOOjVHgc%3d&risl=&pid=ImgRaw&r=0'" alt="Avatar">
+    <div class="infoWrap">
     <div class="user-info">
-      <span class="username">{{ publicacion.usuario }}</span>
-      <span class="time">2h</span>
+      <span class="username">{{ usuarioPublicacion.nombre }}</span>
+      <span class="time">{{publicacion.fecha_publicacion | date: 'short'}}</span>
     </div>
+    <img *ngIf="usuarioPublicacion.id == usuario.id" class="basura" src="../../assets/img/bote-de-basura.png" width="40px" alt="">
+  </div>
   </div>
   <div class="publication-image-wrapper">
     <img class="publication-image" [src]="publicacion.contenido" alt="Publication Image">
   </div>
   <div class="publication-footer">
     <div class="publication-actions">
-      <button class="like-button">Like</button>
-    </div>
-    <div class="publication-caption">
-      <span class="username">{{ publicacion.usuario }}</span>
-      <span>{{ publicacion.descripcion }}</span>
+      <div class="like-button">
+        <img *ngIf="!likeDado" (click)="darLike()" src="../../assets/img/me-gusta.png" alt="" width="60px">
+        <img *ngIf="likeDado" (click)="quitarLike()" src="../../assets/img/me-gusta-dado.png" alt="" width="60px">
+        <p class="numLike">{{likesPublicacion.length}} FlautiLikes</p>
+      </div>
     </div>
     <div class="publication-comments">
       <div *ngFor="let comment of comentariosPublicacion" class="comment">
