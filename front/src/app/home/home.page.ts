@@ -216,6 +216,7 @@ export class HomePage implements OnInit {
     this.homeService.postLike(publicacion_id, this.usuario.id).subscribe(() => {
       const i = this.publicaciones.findIndex((publicacion: any) => publicacion.id === publicacion_id);
       this.publicaciones[i].liked = true;
+      this.publicaciones[i].numLikes++;
     })
   }
 
@@ -223,6 +224,7 @@ export class HomePage implements OnInit {
     this.homeService.deleteLike(publicacion_id, this.usuario.id).subscribe(() => {
       const i = this.publicaciones.findIndex((publicacion: any) => publicacion.id === publicacion_id);
       this.publicaciones[i].liked = false;
+      this.publicaciones[i].numLikes--;
     })
   }
   

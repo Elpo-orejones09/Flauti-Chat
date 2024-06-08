@@ -152,7 +152,7 @@ header button {
   margin-left: 20px;
   font-weight: bold;
 }
-.like-button:hover,
+
 .comment-button:hover,
 .share-button:hover {
   color: white;
