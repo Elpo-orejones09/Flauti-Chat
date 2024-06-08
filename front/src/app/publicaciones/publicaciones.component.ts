@@ -94,18 +94,21 @@ cargarNombresDeUsuarios(data:any) {
   }
 
   addComment(){
-    this.publicacionesService.postComent(this.usuario.id, this.publicacion.id, this.nuevoComentario).subscribe(()=>{
-      this.nuevoComentario = "";
-      this.getComentarios();
-    });
-    
+    if(this.nuevoComentario.length>0){
+      this.publicacionesService.postComent(this.usuario.id, this.publicacion.id, this.nuevoComentario).subscribe(()=>{
+        this.nuevoComentario = "";
+        this.getComentarios();
+      });  
+    }  
   }
+
   darLike(){
     this.publicacionService.postLike(this.publicacion.id, this.usuario.id).subscribe(()=>{
       this.likeDado = true;
       this.likesPublicacion.length++;
     })
   }
+
   quitarLike(){
     this.publicacionService.deleteLike(this.publicacion.id, this.usuario.id).subscribe(()=>{
       this.likeDado = false;
@@ -129,11 +132,9 @@ cargarNombresDeUsuarios(data:any) {
         this.publicacionesService.eliminarComentarios(this.publicacion.id).subscribe(()=>{
           this.publicacionesService.eliminarLikesPublicacion(this.publicacion.id).subscribe(()=>{
             this.publicacionesService.eliminarPublicacion(this.publicacion.id).subscribe(()=>{});
-            window.location.href = "/userProfile"
+            window.location.href = "/userProfile";
           });
-        });
-        
-        
+        }); 
       }
       });
     }

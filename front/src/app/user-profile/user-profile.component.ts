@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { PerfilService } from '../services/perfil.service';
+import { initializeApp } from "firebase/app";
+import { getAuth, sendPasswordResetEmail } from "firebase/auth";
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -14,9 +17,26 @@ export class UserProfileComponent implements OnInit {
   seguidores:number=0; 
   seguidos:number=0;
 
+  firebaseConfig = {
+    apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",
+    authDomain: "flauti-chat.firebaseapp.com",
+    databaseURL: "https://flauti-chat-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "flauti-chat",
+    storageBucket: "flauti-chat.appspot.com",
+    messagingSenderId: "71228493507",
+    appId: "1:71228493507:web:5c010d94c37d57e62b9c76",
+    measurementId: "G-DGE79KQPRV"
+  };
+
+  app: any;
+  auth: any;
+
   constructor(private userService:UserService, private perfilService:PerfilService){}
 
   ngOnInit(): void {
+    this.app = initializeApp(this.firebaseConfig);
+    this.auth = getAuth(this.app);
+
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
       this.usuario = JSON.parse(usuarioString);
@@ -28,6 +48,16 @@ export class UserProfileComponent implements OnInit {
     this.getPublicaciones();
     this.getSeguidoresSeguidos();
   }
+
+  restartPassword(){
+    sendPasswordResetEmail(this.auth, this.usuario.email)
+    .then(() => {
+      console.log('Email enviado');
+    })
+    .catch((error) => {
+      console.error('Error al enviar el correo de restablecimiento de contraseña:', error);
+    });
+  }
   
   getPublicaciones(){
     this.perfilService.getPublicaciones(this.usuario.id).subscribe(data => {
@@ -35,7 +65,6 @@ export class UserProfileComponent implements OnInit {
       console.log("publicaciones usuario",data);
       this.numeroPublicaciones =  data.length;
     })
-
   }
 
   getSeguidoresSeguidos(){

@@ -98,6 +98,7 @@ export class HomePage implements OnInit {
       console.log('Uploaded a blob or file!', snapshot);
       getDownloadURL(this.storageRef).then(data => {
         this.homeService.postPublicacion(this.usuario.id, data).subscribe(data => {
+          this.datos = null
         })
       })
     });
