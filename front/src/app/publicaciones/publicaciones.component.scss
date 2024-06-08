@@ -178,3 +178,29 @@
   cursor: pointer;
   right: 7px;
 }
+.backspace-arrow {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 9999; /* Asegura que esté por encima de otros elementos */
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s; /* Animación de cambio de color y de transformación */
+}
+
+.backspace-arrow:hover {
+  background-color: rgba(0, 0, 0, 0.2); /* Color de fondo oscuro al pasar el ratón */
+}
+
+.backspace-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-top: 2px solid #fff; /* Líneas horizontales de la flecha */
+  border-left: 2px solid #fff; /* Líneas verticales de la flecha */
+  transform: rotate(-45deg); /* Rotación para formar la flecha */
+}

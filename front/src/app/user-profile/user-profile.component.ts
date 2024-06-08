@@ -13,9 +13,10 @@ import { AuthService } from '../services/auth.service';
 export class UserProfileComponent implements OnInit {
   usuario: any;
   publicaciones: any[] = []; // Adaptar para que se cargue dinámicamente si es necesario
-  numeroPublicaciones:number=0;
-  seguidores:number=0; 
-  seguidos:number=0;
+  mostrarFormularioEdicion = false; // Controla la visibilidad del formulario
+  numeroPublicaciones: number = 0;
+  seguidores: number = 0;
+  seguidos: number = 0;
 
   firebaseConfig = {
     apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",
@@ -43,7 +44,7 @@ export class UserProfileComponent implements OnInit {
       // Si las publicaciones están almacenadas en el objeto usuario, adaptarlo aquí
       // this.publicaciones = this.usuario.publicaciones;
     } else {
-      window.location.href="/iniSesion";
+      window.location.href = "/iniSesion";
     }
     this.getPublicaciones();
     this.getSeguidoresSeguidos();
@@ -62,23 +63,40 @@ export class UserProfileComponent implements OnInit {
   getPublicaciones(){
     this.perfilService.getPublicaciones(this.usuario.id).subscribe(data => {
       this.publicaciones = data;
-      console.log("publicaciones usuario",data);
-      this.numeroPublicaciones =  data.length;
+      console.log("publicaciones usuario", data);
+      this.numeroPublicaciones = data.length;
     })
   }
 
-  getSeguidoresSeguidos(){
-    this.userService.getSeguidores(this.usuario.id).subscribe(data=>{
+  getSeguidoresSeguidos() {
+    this.userService.getSeguidores(this.usuario.id).subscribe(data => {
       this.seguidores = data.length;
     })
-    this.userService.getSeguidos(this.usuario.id).subscribe(data=>{
+    this.userService.getSeguidos(this.usuario.id).subscribe(data => {
       this.seguidos = data.length;
     })
   }
 
-  cerrarSesion(){
+  abrirFormularioEdicion(): void {
+    this.mostrarFormularioEdicion = true;
+  }
+
+  cerrarFormularioEdicion(): void {
+    this.mostrarFormularioEdicion = false;
+  }
+
+  guardarCambios(): void {
+    // Aquí deberías enviar los cambios al servicio correspondiente
+    // Por ejemplo:
+    // this.userService.actualizarUsuario(this.usuario).subscribe(() => {
+    //   this.cerrarFormularioEdicion();
+    // });
+    this.cerrarFormularioEdicion();
+  }
+
+  cerrarSesion() {
     sessionStorage.removeItem('usuario');
-    window.location.href="/iniSesion";
+    window.location.href = "/iniSesion";
   }
 
   goToDetalles(id: number) {
@@ -87,6 +105,4 @@ export class UserProfileComponent implements OnInit {
     sessionStorage.setItem("publicaionSeleccionada", id_publi)
     window.location.href = `/fotoDetalle`;
   }
-  
 }
-
