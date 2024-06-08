@@ -70,10 +70,15 @@ export class HomePage implements OnInit {
         this.getFollowPublicaciones();
       });
     });
-
+    let publicacionCondicion = sessionStorage.getItem("publicaionSeleccionada");
+    if( publicacionCondicion != null || publicacionCondicion != undefined){
+      console.log(publicacionCondicion);
+      sessionStorage.removeItem("publicaionSeleccionada");
+      publicacionCondicion = null;
+      window.location.reload();
+    } 
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
-
   }
 
   obtenerArchivo(e: any) {
@@ -169,7 +174,6 @@ export class HomePage implements OnInit {
       this.publicaciones = publicaciones;
       this.getPublicacionesConLike();
       this.publicaciones = this.shuffleArray(this.publicaciones);
-      console.log("publicaciones", this.publicaciones)
     });
   }
 
@@ -192,12 +196,11 @@ export class HomePage implements OnInit {
   }
 
   getPublicacionesConLike() {
-    console.log("antes del errro", this.publicaciones)
     const likedPosts = this.publicaciones.filter((post: any) => this.likes.some((like: any) => like.publicacion_id === post.id));
     const notLikedPosts = this.publicaciones.filter((post: any) => !this.likes.some((like: any) => like.publicacion_id === post.id));
     notLikedPosts.forEach((post: any) => post.liked = false);
     likedPosts.forEach((post: any) => post.liked = true);
-    this.publicaciones = notLikedPosts;
+    this.publicaciones = [...likedPosts, ...notLikedPosts];
     console.log('publicaciones con like', this.publicaciones);
   }
 
