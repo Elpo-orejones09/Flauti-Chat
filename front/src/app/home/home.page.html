@@ -51,6 +51,7 @@
             (click)="darLike(publicacion.id)">
           <img *ngIf="publicacion.liked" width="60px" src="../../assets/img/me-gusta-dado.png"
             (click)="quitarLike(publicacion.id)">
+            <p class="numLike">{{publicacion.numLikes}} FlautiLikes</p>
         </div>
         <div>
           <img src="../../assets/img/comentario.png" class="comment-button" (click)="goToDetalles(publicacion.id)"

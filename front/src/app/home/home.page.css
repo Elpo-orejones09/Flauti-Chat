@@ -145,8 +145,13 @@ header button {
   border: none;
   color: #bbb;
   cursor: pointer;
+  display: flex;
 }
-
+.numLike{
+  font-size: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+}
 .like-button:hover,
 .comment-button:hover,
 .share-button:hover {

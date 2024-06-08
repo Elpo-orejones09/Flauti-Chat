@@ -49,14 +49,12 @@ export class HomePage implements OnInit {
   async ngOnInit() {
     this.usuario = sessionStorage.getItem('usuario');
     this.usuario = JSON.parse(this.usuario);
-    console.log("string usuario", sessionStorage.getItem('usuario'))
     if (!this.usuario) {
       window.location.href = "/iniSesion";
     }
     this.homeService.getAllUsus(this.usuario.id).subscribe({
       next: (data) => {
         this.allUsers = data;
-        console.log("users", data);
       },
       error: (error) => {
         console.error('Error fetching users', error);
@@ -99,9 +97,7 @@ export class HomePage implements OnInit {
     uploadBytes(this.storageRef, this.datos).then((snapshot) => {
       console.log('Uploaded a blob or file!', snapshot);
       getDownloadURL(this.storageRef).then(data => {
-        console.log("url", data)
         this.homeService.postPublicacion(this.usuario.id, data).subscribe(data => {
-          console.log("subida exitosa", data);
         })
       })
     });
@@ -110,7 +106,6 @@ export class HomePage implements OnInit {
 
   getUsuPublicacion(id: number) {
     const user: any = this.allUsers.filter(user => user.id === id);
-    console.log("usuario publicacion", user);
     return user[0].nombre;
   }
 
@@ -147,7 +142,6 @@ export class HomePage implements OnInit {
   }
 
   followPeople(seguido_id: number) {
-    console.log("seguidoId", seguido_id);
     this.userService.createSeguidor(this.usuario.id, seguido_id).subscribe(() => {
       const i = this.allUsers.findIndex(user => user.id === seguido_id);
       this.allUsers[i].follow = true;
@@ -169,8 +163,15 @@ export class HomePage implements OnInit {
 
     forkJoin(observables).subscribe((results: any) => {
       results.forEach((data: any) => {
+        for(const datosPublicacion in data){
+          this.homeService.getLikesPublicacion(data[datosPublicacion].id).subscribe(dataLikes=>{
+            console.log("dataLikes",dataLikes);
+            data[datosPublicacion].numLikes = dataLikes.length;
+          })
+        }
         publicaciones = publicaciones.concat(data);
       });
+      console.log(publicaciones)
       this.publicaciones = publicaciones;
       this.getPublicacionesConLike();
       this.publicaciones = this.shuffleArray(this.publicaciones);
@@ -201,7 +202,6 @@ export class HomePage implements OnInit {
     notLikedPosts.forEach((post: any) => post.liked = false);
     likedPosts.forEach((post: any) => post.liked = true);
     this.publicaciones = [...likedPosts, ...notLikedPosts];
-    console.log('publicaciones con like', this.publicaciones);
   }
 
   goToDetalles(id: number) {
@@ -228,6 +228,13 @@ export class HomePage implements OnInit {
   
   toggleMenu() {
     this.menuVisible = !this.menuVisible;
+  }
+
+  getLikesPublicacion(publicacion_id:number){
+    this.homeService.getLikesPublicacion(publicacion_id).subscribe(data =>{
+      
+    })
+
   }
 
   /*archivoSeleccionado(event: any) {
