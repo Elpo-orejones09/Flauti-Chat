@@ -24,4 +24,20 @@ export class PublicacionService {
     const url = `${this.apiUrl}/comentarios`;
     return this.http.post(url, comentario);
   }
+
+  eliminarComentarios(publicacion_id:number):Observable<any>{
+    const url = `${this.apiUrl}/comentarios/publicacion/${publicacion_id}`;
+    return this.http.delete(url);
+  }
+
+  eliminarLikesPublicacion(publiacion_id:number):Observable<any>{
+    const url = `${this.apiUrl}/likes/publicacion/${publiacion_id}`;
+    return this.http.delete(url);
+  }
+
+  eliminarPublicacion(publicacion_id:number):Observable<any>{
+    const url = `${this.apiUrl}/publicaciones/${publicacion_id}`;
+    return this.http.delete(url);
+  }
+
 }

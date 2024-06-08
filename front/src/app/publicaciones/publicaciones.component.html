@@ -6,7 +6,7 @@
       <span class="username">{{ usuarioPublicacion.nombre }}</span>
       <span class="time">{{publicacion.fecha_publicacion | date: 'short'}}</span>
     </div>
-    <img *ngIf="usuarioPublicacion.id == usuario.id" class="basura" src="../../assets/img/bote-de-basura.png" width="40px" alt="">
+    <img (click)="eliminarPublicacion()" *ngIf="usuarioPublicacion.id == usuario.id" class="basura" src="../../assets/img/bote-de-basura.png" width="40px" alt="">
   </div>
   </div>
   <div class="publication-image-wrapper">

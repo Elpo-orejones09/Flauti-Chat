@@ -3,6 +3,7 @@ import { getFirestore, collection, query, getDocs } from 'firebase/firestore';
 import { initializeApp } from 'firebase/app';
 import { HomdService } from '../services/homd.service';
 import { PublicacionService } from '../services/publicacion.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-publicaciones',
@@ -111,6 +112,31 @@ cargarNombresDeUsuarios(data:any) {
       this.likesPublicacion.length--;
     })
   }
+
+  eliminarPublicacion(){
+    
+    Swal.fire({
+      title: "¿Deseas eliminar el post?",
+      text: "No podras desacer los cambios",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Si, quiero eliminarlo",
+      cancelButtonText: "Cancelar"
+    }).then((result:any) => {
+      if (result.isConfirmed) {
+        this.publicacionesService.eliminarComentarios(this.publicacion.id).subscribe(()=>{
+          this.publicacionesService.eliminarLikesPublicacion(this.publicacion.id).subscribe(()=>{
+            this.publicacionesService.eliminarPublicacion(this.publicacion.id).subscribe(()=>{});
+            window.location.href = "/userProfile"
+          });
+        });
+        
+        
+      }
+      });
+    }
 
 }
 

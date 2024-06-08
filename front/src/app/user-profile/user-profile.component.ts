@@ -33,9 +33,8 @@ export class UserProfileComponent implements OnInit {
     this.perfilService.getPublicaciones(this.usuario.id).subscribe(data => {
       this.publicaciones = data;
       console.log("publicaciones usuario",data);
+      this.numeroPublicaciones =  data.length;
     })
-    this.numeroPublicaciones =  this.publicaciones.length;
-    
 
   }
 

@@ -246,6 +246,18 @@ app.get('/api/comentarios/publicacion/:id', (req, res) => {
   });
 });
 
+app.delete('/api/comentarios/publicacion/:id',(req,res) => {
+  const publicacion_id =  req.params.id;
+  connection.query('DELETE FROM comentarios WHERE publicacion_id = ?', publicacion_id ,(err, results) => {
+    if (err) {
+      console.error('Error al eliminar comentarios:', err);
+      res.status(500).json({ error: 'Error al eliminar comentarios' });
+      return;
+    }
+    res.json({ message: 'Comentarios eliminados correctamente' });
+  });
+});
+
 app.post('/api/comentarios', (req, res) => {
   const comentario = {
     usuario_id: req.body.usuario_id,
@@ -275,6 +287,18 @@ app.get('/api/likes/publicacion/:id', (req, res) => {
       return;
     }
     res.json(results);
+  });
+});
+
+app.delete('/api/likes/publicacion/:id', (req, res) => {
+  const publicacion = req.params.id;
+  connection.query('DELETE FROM likes WHERE publicacion_id = ?', publicacion, (err, results) => {
+    if (err) {
+      console.error('Error al eliminar likes:', err);
+      res.status(500).json({ error: 'Error al elimar likes' });
+      return;
+    }
+    res.json({message:'Eliminado correctamente'});
   });
 });
 
