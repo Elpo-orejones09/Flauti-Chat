@@ -19,6 +19,15 @@ export class HomePage implements OnInit {
   fecha = Date();
   allUsers: any[] = [];
   searchTerm: string = '';
+  /*ads: { imageUrl: string }[] = [
+    { imageUrl: 'assets/img/addidas.png' },
+    { imageUrl: 'assets/img/dreamfit.jpg' },
+    { imageUrl: 'assets/img/verssace.jpg' },
+    { imageUrl: 'assets/img/gucci.jpg' }
+  ];
+
+  currentSlideIndex = 0;
+  carouselInterval: any;*/
 
   follows: any;
   likes: any;
@@ -47,6 +56,7 @@ export class HomePage implements OnInit {
   constructor(private router: Router, private homeService: HomdService, private userService: UserService, private location: Location) { }
 
   async ngOnInit() {
+    //this.startCarousel();
     this.usuario = sessionStorage.getItem('usuario');
     this.usuario = JSON.parse(this.usuario);
     if (!this.usuario) {
@@ -78,6 +88,15 @@ export class HomePage implements OnInit {
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
   }
+  
+  /*startCarousel() {
+    this.carouselInterval = setInterval(() => {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.ads.length;
+    }, 8000);
+  }
+  nextSlide() {
+    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.ads.length;
+  }*/
 
   obtenerArchivo(e: any) {
     const archivo = e.target.files[0];
@@ -266,4 +285,6 @@ export class HomePage implements OnInit {
       }
     }
   }*/
+ 
 }
+

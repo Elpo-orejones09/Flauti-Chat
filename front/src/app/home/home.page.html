@@ -25,9 +25,18 @@
 </div>
 
 <div class="lateral-izquierdo">
-  <div>
-    <!-- Contenido lateral izquierdo -->
-  </div>
+
+   <!--
+  <div class="carousel">
+    <div class="slide">
+      <img src="assets/img/addidas.png" alt="Slide 1">
+    </div>
+    <div class="slide">
+      <img src="assets/img/dreamfit.jpg" alt="Slide 2">
+    </div>
+     
+  </div>-->
+
 </div>
 
 <div class="publicaciones">
@@ -74,7 +83,8 @@
       <input id="file" type="file" (change)="obtenerArchivo($event)" class="mb-2" />
       Subir archivo
     </label>
-    <button *ngIf="datos!=null" (click)="subirPublicacion()" class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded">
+    <button *ngIf="datos!=null" (click)="subirPublicacion()"
+      class="bg-purple-600 hover:bg-purple-700 text-white py-2 px-4 rounded">
       Subir
     </button>
   </div>

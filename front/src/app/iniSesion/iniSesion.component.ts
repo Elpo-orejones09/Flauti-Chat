@@ -4,12 +4,22 @@ import { initializeApp } from "firebase/app";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { AuthService } from '../services/auth.service';
 import Swal from 'sweetalert2';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-ini-sesion',
   templateUrl: './iniSesion.component.html',
   styleUrls: ['./iniSesion.component.scss'],
 })
+/*export class AppComponent {
+  constructor(private translate: TranslateService) {
+    // Configura el idioma por defecto
+    this.translate.setDefaultLang('assets/i18n/es.json');
+  }
+  switchLanguage(language: string) {
+    this.translate.use(language);
+  }
+}*/
 export class IniSesionComponent implements OnInit {
   firebaseConfig = {
     apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",

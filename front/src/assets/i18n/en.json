@@ -1,0 +1,9 @@
+{
+    "emailLabel": "E-mail",
+    "emailPlaceholder": "Introduce your E-mail",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Introduce your Password",
+    "forgotPassword": "¿Forgot your Password?",
+    "noAccount": "¿You dont have no Account?",
+    "register": "Register"
+  }

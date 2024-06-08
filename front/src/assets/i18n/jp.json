@@ -1,0 +1,9 @@
+{
+    "emailLabel": "メールアドレス",
+    "passwordLabel": "パスワード",
+    "emailPlaceholder": "メールアドレスを入力してください",
+    "passwordPlaceholder": "パスワードを入力してください",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "registerLink": "アカウントをお持ちでないですか？ 登録",
+    "submitButton": "ログイン"
+  }
