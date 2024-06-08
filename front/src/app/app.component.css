@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Calibri&display=swap');
+
+input, textarea {
+  font-family: 'Calibri', sans-serif;
+}
+@font-face {
+    font-family: 'Calibri';
+    src: local('Calibri'), local('Calibri-Regular'),
+         url('https://fonts.googleapis.com/css2?family=Calibri&display=swap'),
+         url('https://fonts.googleapis.com/css2?family=Calibri&display=swap');
+    font-weight: normal;
+    font-style: normal;
+  }
+  
+  /* Aplica la fuente a todo el cuerpo de la página */
+  body {
+    font-family: 'Calibri', Arial, sans-serif;
+  }
+  
+  /* También puedes asegurarte de que todos los elementos usen esta fuente */
+  * {
+    font-family: 'Calibri', Arial, sans-serif;
+  }
+  

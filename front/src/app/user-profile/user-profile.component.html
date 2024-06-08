@@ -6,7 +6,7 @@
     <div class="perfil-info">
       <div class="perfil-nombre">
         <h1>{{ usuario.username }}</h1>
-        <button class="perfil-editar">Editar perfil</button>
+        <button class="perfil-editar" (click)="abrirFormularioEdicion()">Editar perfil</button>
         <button class="perfil-editar" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
       <div class="perfil-estadisticas">
@@ -27,4 +27,25 @@
     </div>
   </div>  
 </div>
+<!-- Formulario de edición de perfil -->
+<div *ngIf="mostrarFormularioEdicion" class="overlay">
+  <div class="formulario-edicion">
+    <button class="close-button" (click)="cerrarFormularioEdicion()">X</button>
+    <h2>Editar perfil</h2>
+    <form (submit)="guardarCambios()">
+      <div class="form-group">
+        <label for="username">Nombre de usuario</label>
+        <input type="text" id="username" [(ngModel)]="usuario.username" name="username">
+      </div>
+      <button type="submit" class="submit-button">Guardar cambios</button>
+    </form>
+  </div>
+</div>
+
+<!-- Flecha estilo backspace -->
+<a href="/home">
+  <div class="backspace-arrow">
+    <div class="backspace-icon"></div>
+  </div>
+</a>
 
