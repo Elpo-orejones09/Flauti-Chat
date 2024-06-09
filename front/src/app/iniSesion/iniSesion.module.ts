@@ -5,14 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { IniSesionComponent } from './iniSesion.component';
 
 import { IniSesionComponentRoutingModule} from './iniSesion-routing.module';
-
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    IniSesionComponentRoutingModule
+    IniSesionComponentRoutingModule,
+    TranslateModule
   ],
   declarations: [IniSesionComponent]
 })

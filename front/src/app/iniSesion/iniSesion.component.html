@@ -1,6 +1,6 @@
 <form class="iniSesion">
   <div class="flex-column">
-    <label>Correo electrónico </label>
+    <label>{{'emailLabel'|translate}}</label>
   </div>
   <div class="inputForm">
     <svg height="20" viewBox="0 0 32 32" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -10,12 +10,12 @@
         </path>
       </g>
     </svg>
-    <input type="text" class="input" name="email" placeholder="Introduce el correo electrónico"
+    <input type="text" class="input" name="email" placeholder="{{'emailPlaceholder' | translate}}"
       [(ngModel)]="datos.email">
   </div>
 
   <div class="flex-column">
-    <label>Contraseña </label>
+    <label>{{'passwordLabel' | translate}}</label>
   </div>
   <div class="inputForm">
     <svg height="20" viewBox="-64 0 512 512" width="20" xmlns="http://www.w3.org/2000/svg">
@@ -26,7 +26,7 @@
         d="m304 224c-8.832031 0-16-7.167969-16-16v-80c0-52.929688-43.070312-96-96-96s-96 43.070312-96 96v80c0 8.832031-7.167969 16-16 16s-16-7.167969-16-16v-80c0-70.59375 57.40625-128 128-128s128 57.40625 128 128v80c0 8.832031-7.167969 16-16 16zm0 0">
       </path>
     </svg>
-    <input type="password" name="contrasena" class="input" placeholder="Introduce tu contraseña"
+    <input type="password" name="contrasena" class="input" placeholder="{{'passwordPlaceholder' | translate}}"
       [(ngModel)]="datos.password">
     <svg viewBox="0 0 576 512" height="1em" xmlns="http://www.w3.org/2000/svg">
       <path
@@ -36,23 +36,23 @@
   </div>
 
   <div class="flex-row">
-    <span class="span">¿Olvidaste tu contraseña?</span>
+    <span class="span">{{'forgotPassword' | translate}}</span>
   </div>
-  <button class="button-submit" (click)="iniciarSesion()">Iniciar Sesión</button>
-  <p class="p">¿No tienes cuenta? <span class="span" (click)="redirectTo('/registro')">Registrate</span></p>
+  <button class="button-submit" (click)="iniciarSesion()">{{'iniSesion'|translate}}</button>
+  <p class="p">{{'noAccount' | translate}} <span class="span" (click)="redirectTo('/registro')">{{'register' | translate}}</span></p>
 </form>
 
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
       <ul class="footer-links">
-        <li><a href="#">Acerca de</a></li>
-        <li><a href="#">Ayuda</a></li>
-        <li><a href="#">Privacidad</a></li>
-        <li><a href="#">Términos</a></li>
+        <li><a href="#">{{'acercaDe'|translate}}</a></li>
+        <li><a href="#">{{'ayuda'|translate}}</a></li>
+        <li><a href="#">{{'privacidad'|translate}}</a></li>
+        <li><a href="#">{{'terminos'|translate}}</a></li>
       </ul>
       <div class="copyright">
-        &copy; 2024 Pied-Pipper S.L. "Que no te toquen la flauta" Todos los derechos reservados.
+        &copy; 2024 Pied-Pipper S.L. "Que no te toquen la flauta" {{'derechos'|translate}}.
       </div>
     </div>
   </div>

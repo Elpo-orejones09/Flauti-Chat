@@ -4,6 +4,12 @@
     "emailPlaceholder": "メールアドレスを入力してください",
     "passwordPlaceholder": "パスワードを入力してください",
     "forgotPassword": "パスワードをお忘れですか？",
-    "registerLink": "アカウントをお持ちでないですか？ 登録",
-    "submitButton": "ログイン"
+    "noAccount": "アカウントをお持ちでないですか？",
+    "register": "チェックイン",
+    "iniSesion": "ログイン",
+    "acercaDe": "約",
+    "ayuda": "ヘルプ",
+    "privacidad": "プライバシー",
+    "terminos": "規約",
+    "derechos": "全著作権所有"
   }

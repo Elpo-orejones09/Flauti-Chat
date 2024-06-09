@@ -5,5 +5,11 @@
     "passwordPlaceholder": "Introduce tu contraseña",
     "forgotPassword": "¿Olvidaste tu contraseña?",
     "noAccount": "¿No tienes cuenta?",
-    "register": "Regístrate"
+    "register": "Regístrate",
+    "iniSesion":"Iniciar Sesión",
+    "acercaDe":"Acerca de",
+    "ayuda":"Ayuda",
+    "privacidad":"Privacidad",
+    "terminos":"Terminos",
+    "derechos":"Todos los derechos reservados"
   }
