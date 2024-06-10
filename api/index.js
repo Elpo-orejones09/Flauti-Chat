@@ -114,6 +114,15 @@ app.post('/api/usuarios', (req, res) => {
     });
 });
 
+//actualizar usuarios
+app.patch('/api/usuarios/:id', (req, res) => {
+  const usuario = {
+    nombre : req.body.nombre,
+    email: req.body.email,
+  }
+
+})
+
 app.get('/api/publicaciones', (req, res) => {
   connection.query('SELECT * FROM publicaciones', (err, results) => {
     if (err) {
