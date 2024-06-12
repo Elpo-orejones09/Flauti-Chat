@@ -486,7 +486,7 @@ header button {
 .slides {
   display: flex;
   width: 300%; /* Ajusta este valor según el número de slides */
-  animation: slideAnimation 20s infinite;
+  animation: slideAnimation 50s infinite;
   height: 100%;
 }
 
@@ -497,7 +497,7 @@ header button {
 }
 
 .slide img {
-  width: 100%;
+  width: auto;
   height: 100%;
   display: block;
   cursor: pointer;
@@ -508,7 +508,6 @@ header button {
   20% { transform: translateX(-100%); } /* Slide 2 */
   40% { transform: translateX(-200%); } /* Slide 3 */
   60% { transform: translateX(-300%); } /* Slide 4 */
-  80% { transform: translateX(-350%); } /* Slide 5 */
   100% { transform: translateX(0); } /* Volver al primer slide */
 }
 
@@ -517,7 +516,6 @@ header button {
   left: 0;
   width: 20%;
   height: 100%;
-  border: 2px #000000 solid;
 }
 
 @media (max-width: 1050px) {

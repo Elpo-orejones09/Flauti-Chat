@@ -29,13 +29,11 @@
   <div class="formulario-edicion">
     <button class="close-button" (click)="cerrarFormularioEdicion()">X</button>
     <h2>Editar perfil</h2>
-    <form (submit)="guardarCambios()">
       <div class="form-group">
         <label for="username">Nombre de usuario</label>
         <input type="text" id="username" [(ngModel)]="newName" name="username">
       </div>
       <button (click)="updateName()" class="submit-button">Guardar cambios</button>
-    </form>
   </div>
 </div>
 

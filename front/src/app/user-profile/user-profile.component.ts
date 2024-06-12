@@ -4,6 +4,8 @@ import { PerfilService } from '../services/perfil.service';
 import { initializeApp } from "firebase/app";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { AuthService } from '../services/auth.service';
+import Swal from 'sweetalert2';
+import { HomdService } from '../services/homd.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -34,7 +36,7 @@ export class UserProfileComponent implements OnInit {
   app: any;
   auth: any;
 
-  constructor(private userService:UserService, private perfilService:PerfilService){}
+  constructor(private userService: UserService, private perfilService: PerfilService, private homeService: HomdService) { }
 
   ngOnInit(): void {
     this.app = initializeApp(this.firebaseConfig);
@@ -43,6 +45,7 @@ export class UserProfileComponent implements OnInit {
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString) {
       this.usuario = JSON.parse(usuarioString);
+      this.getUsus();
       // Si las publicaciones están almacenadas en el objeto usuario, adaptarlo aquí
       // this.publicaciones = this.usuario.publicaciones;
     } else {
@@ -52,17 +55,32 @@ export class UserProfileComponent implements OnInit {
     this.getSeguidoresSeguidos();
   }
 
-  restartPassword(){
-    sendPasswordResetEmail(this.auth, this.usuario.email)
-    .then(() => {
-      console.log('Email enviado');
+  getUsus() {
+    this.homeService.getAllUsus(this.usuario.id).subscribe(data => {
+      this.allUsus = data;
     })
-    .catch((error) => {
-      console.error('Error al enviar el correo de restablecimiento de contraseña:', error);
-    });
   }
-  
-  getPublicaciones(){
+
+  restartPassword() {
+    sendPasswordResetEmail(this.auth, this.usuario.email)
+      .then(() => {
+        Swal.fire({
+          title: "Correo electrónico enviado",
+          text: "Se ha enviado un correo electronico para cambiar tu contraseña",
+          icon: "success"
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          title: "Error",
+          text: "Error al enviar el correo de restablecimiento de contraseña",
+          icon: "error"
+        });
+        console.error('Error al enviar el correo de restablecimiento de contraseña:', error);
+      });
+  }
+
+  getPublicaciones() {
     this.perfilService.getPublicaciones(this.usuario.id).subscribe(data => {
       this.publicaciones = data;
       console.log("publicaciones usuario", data);
@@ -107,14 +125,23 @@ export class UserProfileComponent implements OnInit {
     sessionStorage.setItem("publicaionSeleccionada", id_publi)
     window.location.href = `/fotoDetalle`;
   }
-  updateName(){
+  updateName() {
     const id = this.usuario.id;
     const nombre = this.newName;
-    this.perfilService.updatePerfil(id,nombre).subscribe(()=>{
-      this.newName="";
-      this.usuario.nombre= nombre;
-      sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
-      this.mostrarFormularioEdicion = false;
-    })
+    const usuariosConNombre = this.allUsus.filter((user: any) => user.nombre === nombre);
+    if (usuariosConNombre.length == 0) {
+      this.perfilService.updatePerfil(id, nombre).subscribe(() => {
+        this.newName = "";
+        this.usuario.nombre = nombre;
+        sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
+        this.mostrarFormularioEdicion = false;
+      })
+    }else{
+      Swal.fire({
+        title: "No se pudo modificar",
+        text: "Puede que el nombre seleccionado esté siendo utilizado por otro usuario.",
+        icon: "error"
+      });
+    }
   }
 }
