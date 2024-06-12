@@ -12,99 +12,94 @@
   max-width: 800px;
   margin: auto;
   margin-top: 50px;
-
-  .perfil-cabecera {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    padding: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-
-    .perfil-avatar-container {
-      margin-right: 20px;
-      flex-shrink: 0;
-
-      .perfil-avatar {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        border: 2px solid rgba(255, 255, 255, 0.3);
-      }
-    }
-
-    .perfil-info {
-      flex-grow: 1;
-
-      .perfil-nombre {
-        display: flex;
-        align-items: center;
-        margin-bottom: 10px;
-
-        h1 {
-          margin: 0;
-          font-size: 24px;
-          font-weight: bold;
-        }
-
-        .perfil-editar {
-          margin-left: 20px;
-          padding: 5px 10px;
-          border: none;
-          background-color: rgba(255, 255, 255, 0.2);
-          color: #ffffff;
-          border-radius: 5px;
-          cursor: pointer;
-        }
-      }
-
-      .perfil-estadisticas {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 10px;
-
-        span {
-          font-size: 16px;
-
-          strong {
-            font-weight: bold;
-          }
-        }
-      }
-
-      .perfil-bio {
-        font-size: 14px;
-      }
-    }
-  }
-
-  .perfil-publicaciones {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-    width: 100%;
-    padding: 20px;
-
-    .publicacion {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(5px);
-      border-radius: 10px;
-      overflow: hidden;
-
-      img {
-        width: 100%;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      }
-
-      p { /* Esto posiblemente habra que quitarlo*/
-        text-align: center;
-        margin: 10px;
-        font-size: 14px;
-        color: #ffffff;
-      }
-    }
-  }
 }
-/* Formulario de edición de perfil */
+
+.perfil-cabecera {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.perfil-avatar-container {
+  margin-right: 20px;
+  flex-shrink: 0;
+}
+
+.perfil-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.perfil-info {
+  flex-grow: 1;
+}
+
+.perfil-nombre {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.perfil-nombre h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.perfil-editar {
+  margin-left: 20px;
+  padding: 5px 10px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.perfil-estadisticas {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.perfil-estadisticas span {
+  font-size: 16px;
+}
+
+.perfil-estadisticas strong {
+  font-weight: bold;
+}
+
+.perfil-bio {
+  font-size: 14px;
+}
+
+.perfil-publicaciones {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  padding: 20px;
+  max-height: 400px; /* Altura máxima para la sección de publicaciones */
+  overflow-y: auto; /* Habilita el scroll vertical */
+}
+
+.publicacion {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.publicacion img {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 .overlay {
   position: fixed;
   top: 0;
@@ -116,7 +111,7 @@
   justify-content: center;
   align-items: center;
   backdrop-filter: blur(5px);
-  z-index: 1000; /* Asegúrate de que esté por encima de otros elementos */
+  z-index: 1000;
 }
 
 .formulario-edicion {
@@ -159,7 +154,7 @@
 }
 
 .submit-button {
-  background-color: #9c27b0; /* Color morado de tu web */
+  background-color: #9c27b0;
   color: white;
   border: none;
   padding: 0.75rem 1.5rem;
@@ -169,22 +164,22 @@
 }
 
 .submit-button:hover {
-  background-color: #7b1fa2; /* Color más oscuro en hover */
+  background-color: #7b1fa2;
 }
 
 .backspace-arrow {
   position: fixed;
   top: 20px;
   left: 20px;
-  z-index: 9999; /* Asegura que esté por encima de otros elementos */
+  z-index: 9999;
   width: 50px;
   height: 50px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s; /* Animación de cambio de color y de transformación */
+  transition: background-color 0.3s, transform 0.3s;
 }
 
 .backspace-arrow:hover {
-  background-color: rgba(0, 0, 0, 0.2); /* Color de fondo oscuro al pasar el ratón */
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .backspace-icon {
@@ -194,7 +189,7 @@
   transform: translate(-50%, -50%);
   width: 20px;
   height: 20px;
-  border-top: 2px solid #fff; /* Líneas horizontales de la flecha */
-  border-left: 2px solid #fff; /* Líneas verticales de la flecha */
-  transform: rotate(-45deg); /* Rotación para formar la flecha */
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  transform: rotate(-45deg);
 }
