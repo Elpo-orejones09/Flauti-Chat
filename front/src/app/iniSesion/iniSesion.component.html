@@ -67,10 +67,10 @@
   <div class="container">
     <div class="footer-content">
       <ul class="footer-links">
-        <li><a href="#">{{'acercaDe'|translate}}</a></li>
-        <li><a href="#">{{'ayuda'|translate}}</a></li>
-        <li><a href="#">{{'privacidad'|translate}}</a></li>
-        <li><a href="#">{{'terminos'|translate}}</a></li>
+        <li><a (click)="redirectTo('/acercaDe')">{{'acercaDe'|translate}}</a></li>
+        <li><a (click)="redirectTo('/ayuda')">{{'ayuda'|translate}}</a></li>
+        <li><a (click)="redirectTo('/privacidad')">{{'privacidad'|translate}}</a></li>
+        <li><a (click)="redirectTo('/terminos')">{{'terminos'|translate}}</a></li>
       </ul>
       <div class="copyright">
         &copy; 2024 Pied-Pipper S.L. {{'derechos'|translate}}.

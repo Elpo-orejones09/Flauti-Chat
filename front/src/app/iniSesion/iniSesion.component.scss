@@ -91,7 +91,7 @@
   .button-submit:hover {
     background-color: #252727;
   }
-  
+
   .p {
     text-align: center;
     color: black;
@@ -126,6 +126,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 9999;
   }
   
   .container {
@@ -158,6 +159,7 @@
   
   .footer-links li a:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
   
   .copyright {

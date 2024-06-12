@@ -15,6 +15,22 @@ const routes: Routes = [
     loadChildren: () => import('./iniSesion/iniSesion.module').then(m => m.IniSesionComponentPageModule)
   },
   {
+    path: 'acercaDe',
+    loadChildren: ()=> import('./acerca-de/acerca-de.module').then(m => m.AcercaDeModule)
+  },
+  {
+    path: 'ayuda',
+    loadChildren: ()=> import('./ayuda/ayuda.module').then(m => m.AyudaModule)
+  },
+  {
+    path: 'privacidad',
+    loadChildren: ()=> import('./ayuda/ayuda.module').then(m => m.AyudaModule)
+  },
+  {
+    path: 'terminos',
+    loadChildren: () => import('./terminos/terminos.module').then(m => m.TerminosModule)
+  },
+  {
     path: 'userProfile',
     loadChildren: () => import('./user-profile/user-profile.module').then(m => m.UserProfileComponentPageModule)
   },

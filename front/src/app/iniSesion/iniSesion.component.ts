@@ -44,9 +44,12 @@ export class IniSesionComponent implements OnInit {
 
     const usuarioString = sessionStorage.getItem('usuario');
     if (usuarioString !== null) {
-      const usuario = JSON.parse(usuarioString);
       window.location.href = '/home'; // Redireccionar al home page si hay un usuario en sessionStorage
     }
+  }
+
+  redirectTo(url: string) {
+    window.location.href = url;
   }
 
   iniciarSesion() {
@@ -85,8 +88,5 @@ export class IniSesionComponent implements OnInit {
       });
   }
 
-  redirectTo(url: string) {
-    window.location.href = url;
-  }
 }
 
