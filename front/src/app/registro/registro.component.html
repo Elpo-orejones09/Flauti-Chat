@@ -100,17 +100,18 @@
   <button class="button-submit" (click)="redirectTo('/iniSesion')">Registrarse</button>
   <p class="p">¿Ya tienes cuenta? <span class="span" (click)="noneRegist('/iniSesion')">Iniciar sesión</span></p>
 </form>
+
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
       <ul class="footer-links">
-        <li><a href="#">Acerca de</a></li>
-        <li><a href="#">Ayuda</a></li>
-        <li><a href="#">Privacidad</a></li>
-        <li><a href="#">Términos</a></li>
+        <li><a (click)="buttonRedirectTo('/acercaDe')">Acerca de</a></li>
+        <li><a (click)="buttonRedirectTo('/ayuda')">Ayuda</a></li>
+        <li><a (click)="buttonRedirectTo('/privacidad')">Privacidad</a></li>
+        <li><a (click)="buttonRedirectTo('/terminos')">Terminos</a></li>
       </ul>
       <div class="copyright">
-        &copy; 2024 Pied-Pipper S.L. "Que no te toquen la flauta"  Todos los derechos reservados.
+        &copy; 2024 Pied-Pipper S.L. Todos los derechos reservados.
       </div>
     </div>
   </div>

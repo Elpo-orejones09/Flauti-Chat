@@ -24,7 +24,7 @@ const routes: Routes = [
   },
   {
     path: 'privacidad',
-    loadChildren: ()=> import('./ayuda/ayuda.module').then(m => m.AyudaModule)
+    loadChildren: ()=> import('./privacidad/privacidad.module').then(m => m.PrivacidadModule)
   },
   {
     path: 'terminos',

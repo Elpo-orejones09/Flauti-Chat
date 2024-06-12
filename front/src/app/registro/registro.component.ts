@@ -59,6 +59,10 @@ export class RegistroComponent implements OnInit {
     this.fileData = archivo;
   }
 
+  buttonRedirectTo(url: string) {
+    window.location.href = url;
+  }
+  
   async redirectTo(url: string) {
     if (this.datos.contrasena === this.datos.contrasena2) {
       if(this.datos.user){
