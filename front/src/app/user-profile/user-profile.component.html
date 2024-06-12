@@ -5,7 +5,7 @@
     </div>
     <div class="perfil-info">
       <div class="perfil-nombre">
-        <h1>{{ usuario.username }}</h1>
+        <h1>{{ usuario.nombre }}</h1>
         <button class="perfil-editar" (click)="abrirFormularioEdicion()">Editar perfil</button>
         <button class="perfil-editar" (click)="cerrarSesion()">Cerrar sesión</button>
         <button class="perfil-editar" (click)="restartPassword()">Restablecer contraseña</button>
@@ -14,10 +14,6 @@
         <span><strong>{{ numeroPublicaciones }}</strong> publicaciones</span>
         <span><strong>{{ seguidores }}</strong> seguidores</span>
         <span><strong>{{ seguidos }}</strong> seguidos</span>
-      </div>
-      <div class="perfil-bio">
-        <p>{{ usuario.nombre }}</p>
-        <p>{{ usuario.bio }}</p>
       </div>
     </div>
   </div>
@@ -36,9 +32,9 @@
     <form (submit)="guardarCambios()">
       <div class="form-group">
         <label for="username">Nombre de usuario</label>
-        <input type="text" id="username" [(ngModel)]="usuario.username" name="username">
+        <input type="text" id="username" [(ngModel)]="newName" name="username">
       </div>
-      <button type="submit" class="submit-button">Guardar cambios</button>
+      <button (click)="updateName()" class="submit-button">Guardar cambios</button>
     </form>
   </div>
 </div>

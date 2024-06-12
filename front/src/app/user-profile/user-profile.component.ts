@@ -18,6 +18,8 @@ export class UserProfileComponent implements OnInit {
   seguidores: number = 0;
   seguidos: number = 0;
 
+  newName: string = "";
+  allUsus: any = [];
   firebaseConfig = {
     apiKey: "AIzaSyDafhFR7waF8lsv0nynPsHR77KPQ4gIuTE",
     authDomain: "flauti-chat.firebaseapp.com",
@@ -104,5 +106,15 @@ export class UserProfileComponent implements OnInit {
     const id_publi = `${id}`;
     sessionStorage.setItem("publicaionSeleccionada", id_publi)
     window.location.href = `/fotoDetalle`;
+  }
+  updateName(){
+    const id = this.usuario.id;
+    const nombre = this.newName;
+    this.perfilService.updatePerfil(id,nombre).subscribe(()=>{
+      this.newName="";
+      this.usuario.nombre= nombre;
+      sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
+      this.mostrarFormularioEdicion = false;
+    })
   }
 }

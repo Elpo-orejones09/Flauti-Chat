@@ -116,11 +116,39 @@ app.post('/api/usuarios', (req, res) => {
 
 //actualizar usuarios
 app.patch('/api/usuarios/:id', (req, res) => {
-  const usuario = {
-    nombre : req.body.nombre,
-    email: req.body.email,
-  }
+  const id = req.params.id;
+  connection.query('SELECT * FROM usuarios WHERE id=?', [id], (err, results) => {
+    if (err) {
+      console.error('Error al buscar usuario en la base de datos:', err);
+      res.status(500).json({ error: 'Error al buscar usuario' });
+      return;
+    } else {
 
+      const usuario = {
+        nombre : req.body.nombre,
+        email: results[0].email,
+        fecha_registro: results[0].fecha_registro
+      }
+      
+      const actualizarUsuarioQuery = `
+      UPDATE usuarios
+      SET nombre = ?, email = ?, fecha_registro = ?
+      WHERE id = ?
+    `;
+    const valores = [usuario.nombre, usuario.email, usuario.fecha_registro, id];
+
+    connection.query(actualizarUsuarioQuery, valores, (err, result) => {
+      if (err) {
+        console.error('Error al actualizar el usuario en la base de datos:', err);
+        res.status(500).json({ error: 'Error al actualizar el usuario' });
+        return;
+      }
+
+      res.status(200).json({ mensaje: 'Usuario actualizado exitosamente' });
+    });
+    }
+  });
+  
 })
 
 app.get('/api/publicaciones', (req, res) => {

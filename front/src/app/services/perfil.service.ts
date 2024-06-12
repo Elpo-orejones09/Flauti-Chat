@@ -13,4 +13,13 @@ export class PerfilService {
     const url = `${this.apiUrl}/publicaciones/usuario/${id}`;
     return this.http.get(url)
   }
+
+  updatePerfil(id:number, nombre:string):Observable<any>{
+    const url = `${this.apiUrl}/usuarios/${id}`;
+    const content = {
+        nombre : nombre,
+    }
+    return this.http.patch(url, content);
+    
+  }
 }
