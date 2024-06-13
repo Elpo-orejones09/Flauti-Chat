@@ -22,7 +22,7 @@ export class AuthService {
       displayName: nombre,
       email: email,
       password: password,
-      photoURL: foto
+      photo: foto
     };
     return this.http.post(`${this.apiUrl}/usuarios`, usuario);
   }

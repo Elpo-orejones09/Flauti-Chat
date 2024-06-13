@@ -124,6 +124,7 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    z-index: 9999;
   }
   
   .container {
@@ -136,6 +137,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    cursor: pointer;
   }
   
   .footer-links {
@@ -214,5 +216,21 @@
     40% { transform: translateX(-800px); } /* Slide 3 */
     60% { transform: translateX(-1200px); } /* Slide 4 */
     100% { transform: translateX(0); } /* Volver al primer slide */
+  }
+  
+  @media (max-width: 1300px) {
+    .imagen-pc {
+      width: 20%;
+    }
+    .carousel{
+      top:37% ;
+      left:48% ;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .imagen-pc{
+      display: none;
+    }
   }
   

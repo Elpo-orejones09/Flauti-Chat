@@ -219,3 +219,19 @@
     100% { transform: translateX(0); } /* Volver al primer slide */
   }
   
+  @media (max-width: 1300px) {
+    .imagen-pc {
+      width: 20%;
+    }
+    .carousel{
+      top:37% ;
+      left:48% ;
+    }
+  }
+
+  @media (max-width: 1100px) {
+    .imagen-pc{
+      display: none;
+    }
+  }
+  

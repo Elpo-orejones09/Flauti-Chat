@@ -70,7 +70,8 @@ export class RegistroComponent implements OnInit {
       subscribe(async data => {
       if(data.length<=0){
       try {
-        console.log("this.Datos ", this.datos);
+        var downloadURL = "";
+        if(this.fileData){
         this.updateTime();
         const newNameFoto: string = `${this.datos.email}/${this.fecha}`;
         this.storageRef = ref(this.storage, newNameFoto);
@@ -80,11 +81,10 @@ export class RegistroComponent implements OnInit {
         console.log('Uploaded a blob or file!', snapshot);
   
         // Obtener la URL de descarga
-        const downloadURL = await getDownloadURL(this.storageRef);
-        console.log("url", downloadURL);
-  
+        downloadURL = await getDownloadURL(this.storageRef);
+      }
         // Registrar al usuario con la URL de la imagen
-        this.authService.registUsu(this.datos.email, this.datos.contrasena, this.datos.user, downloadURL).subscribe({
+        await this.authService.registUsu(this.datos.email, this.datos.contrasena, this.datos.user, downloadURL).subscribe({
           next: data => {
             Swal.fire({
               icon: "success",

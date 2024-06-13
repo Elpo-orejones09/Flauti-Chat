@@ -92,7 +92,7 @@ app.post('/api/usuarios', (req, res) => {
       const usuarioBdd = {
         nombre: nuevoUsuario.displayName,
         email: userRecord.email,
-        fotoPerfil: userRecord.photoURL
+        fotoPerfil: nuevoUsuario.photo
       };
       connection.query('INSERT INTO usuarios SET ?', usuarioBdd, (err, results) => {
         if (err) {
