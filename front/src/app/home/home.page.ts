@@ -19,15 +19,6 @@ export class HomePage implements OnInit {
   fecha = Date();
   allUsers: any[] = [];
   searchTerm: string = '';
-  /*ads: { imageUrl: string }[] = [
-    { imageUrl: 'assets/img/addidas.png' },
-    { imageUrl: 'assets/img/dreamfit.jpg' },
-    { imageUrl: 'assets/img/verssace.jpg' },
-    { imageUrl: 'assets/img/gucci.jpg' }
-  ];
-
-  currentSlideIndex = 0;
-  carouselInterval: any;*/
 
   follows: any;
   likes: any;
@@ -88,15 +79,6 @@ export class HomePage implements OnInit {
     this.app = initializeApp(this.firebaseConfig);
     this.storage = getStorage(this.app);
   }
-  
-  /*startCarousel() {
-    this.carouselInterval = setInterval(() => {
-      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.ads.length;
-    }, 8000);
-  }
-  nextSlide() {
-    this.currentSlideIndex = (this.currentSlideIndex + 1) % this.ads.length;
-  }*/
 
   obtenerArchivo(e: any) {
     const archivo = e.target.files[0];
@@ -121,7 +103,6 @@ export class HomePage implements OnInit {
         })
       })
     });
-
   }
 
   getUsuPublicacion(id: number) {
@@ -198,6 +179,7 @@ export class HomePage implements OnInit {
     });
   }
 
+
   shuffleArray(array: any[]): any[] {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -259,32 +241,4 @@ export class HomePage implements OnInit {
 
   }
 
-  /*archivoSeleccionado(event: any) {
-    // Verificar si se seleccionó un archivo
-    if (event.target.files.length > 0) {
-      this.imageSelected = true;
-      // Cambiar el texto del input label
-      const label = document.getElementById('fileInputLabel');
-      if (label) {
-        label.innerHTML = 'Archivo seleccionado <img src="tick.png" alt="Tick" width="20px">';
-      }
-    } else {
-      this.imageSelected = false;
-    }
-  }
-
-  eliminarImagen() {
-    // Limpiar el input file y restablecer el texto del label
-    const input = document.getElementById('fileInput') as HTMLInputElement;
-    if (input) {
-      input.value = '';
-      this.imageSelected = false;
-      const label = document.getElementById('fileInputLabel');
-      if (label) {
-        label.innerHTML = 'Subir archivo';
-      }
-    }
-  }*/
- 
 }
-

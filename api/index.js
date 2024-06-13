@@ -12,6 +12,7 @@ const serviceAccount = require("./firebase/flauti-chat-firebase-adminsdk-maaom-e
 app.use(cors()); // Habilitar CORS
 app.use(express.json());
 
+//firebase
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
   databaseURL: "https://flauti-chat-default-rtdb.europe-west1.firebasedatabase.app"
@@ -42,6 +43,7 @@ app.get('/api/usuarios/:nombre', (req, res) => {
   });
 });
 
+// get usuarios que el id no coincida
 app.get("/api/usuarios/no/:id", (req, res) => {
   const user = req.params.id;
   connection.query('SELECT * FROM usuarios WHERE id != ?', [user], (err, results) => {
@@ -68,6 +70,7 @@ app.get('/api/usuarios/iniSesion/:email', (req, res) => {
   });
 });
 
+//usuario por id
 app.get('/api/usuarios/id/:id', (req, res) => {
   console.log("pasa por el usuario")
   const id = req.params.id;
@@ -151,6 +154,7 @@ app.patch('/api/usuarios/:id', (req, res) => {
   
 })
 
+//coges todas las publicaciones
 app.get('/api/publicaciones', (req, res) => {
   connection.query('SELECT * FROM publicaciones', (err, results) => {
     if (err) {
@@ -162,6 +166,7 @@ app.get('/api/publicaciones', (req, res) => {
   });
 });
 
+//get publicaciones del usuario
 app.get('/api/publicaciones/usuario/:id', (req, res) => {
   const usuario = req.params.id;
   connection.query('SELECT * FROM publicaciones WHERE usuario_id = ?',[usuario], (err, results) => {
@@ -175,6 +180,7 @@ app.get('/api/publicaciones/usuario/:id', (req, res) => {
   });
 });
 
+//get publicaciones por id
 app.get('/api/publicaciones/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('SELECT * FROM publicaciones WHERE id = ?',[publicacion], (err, results) => {
@@ -188,6 +194,7 @@ app.get('/api/publicaciones/:id', (req, res) => {
   });
 });
 
+//subir publicaciones
 app.post('/api/publicaciones', (req, res) => {
   const publicacion = {
     usuario_id: req.body.usuario_id,
@@ -217,6 +224,7 @@ app.delete('/api/publicaciones/:id', (req, res) => {
   });
 });
 
+//get seguidores por id de seguido
 app.get('/api/seguidores/:id', (req, res) => {
   const usuario = req.params.id;
   connection.query('SELECT * FROM seguir WHERE seguido_id = ?', usuario, (err, results) => {
@@ -229,6 +237,7 @@ app.get('/api/seguidores/:id', (req, res) => {
   });
 });
 
+// get seguidos por id de seguidor
 app.get('/api/seguidos/:id', (req, res) => {
   const usuario = req.params.id;
   connection.query('SELECT * FROM seguir WHERE seguidor_id = ?', usuario, (err, results) => {
@@ -241,6 +250,7 @@ app.get('/api/seguidos/:id', (req, res) => {
   });
 });
 
+// seguir a alguien
 app.post('/api/seguir', (req, res) => {
   const seguir = {
     seguidor_id: req.body.seguidor_id,
@@ -257,6 +267,7 @@ app.post('/api/seguir', (req, res) => {
   });
 });
 
+//dejar de seguir
 app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
   const seguidor = req.params.seguidor_id;
   const seguido = req.params.seguido_id;
@@ -270,7 +281,7 @@ app.delete('/api/seguidos/:seguidor_id/:seguido_id', (req, res) => {
   });
 });
 
-//comentarios
+//get comentarios de publicacion
 app.get('/api/comentarios/publicacion/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('SELECT * FROM comentarios WHERE publicacion_id = ?', publicacion, (err, results) => {
@@ -283,6 +294,7 @@ app.get('/api/comentarios/publicacion/:id', (req, res) => {
   });
 });
 
+//Eliminar todos lo comentarios de la publicacion
 app.delete('/api/comentarios/publicacion/:id',(req,res) => {
   const publicacion_id =  req.params.id;
   connection.query('DELETE FROM comentarios WHERE publicacion_id = ?', publicacion_id ,(err, results) => {
@@ -295,6 +307,7 @@ app.delete('/api/comentarios/publicacion/:id',(req,res) => {
   });
 });
 
+//subir comentarios
 app.post('/api/comentarios', (req, res) => {
   const comentario = {
     usuario_id: req.body.usuario_id,
@@ -312,9 +325,7 @@ app.post('/api/comentarios', (req, res) => {
   });
 });
 
-
-//likes
-
+//get likes de publicacion
 app.get('/api/likes/publicacion/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('SELECT * FROM likes WHERE publicacion_id = ?', publicacion, (err, results) => {
@@ -327,6 +338,7 @@ app.get('/api/likes/publicacion/:id', (req, res) => {
   });
 });
 
+//eliminar likes de publicacion
 app.delete('/api/likes/publicacion/:id', (req, res) => {
   const publicacion = req.params.id;
   connection.query('DELETE FROM likes WHERE publicacion_id = ?', publicacion, (err, results) => {
@@ -339,6 +351,7 @@ app.delete('/api/likes/publicacion/:id', (req, res) => {
   });
 });
 
+//get likes de publicacion
 app.get('/api/likes/usuario/:id', (req, res) => {
   const usuario = req.params.id;
   connection.query('SELECT * FROM likes WHERE usuario_id = ?', usuario, (err, results) => {
@@ -351,6 +364,7 @@ app.get('/api/likes/usuario/:id', (req, res) => {
   });
 });
 
+//subir un like
 app.post('/api/likes', (req, res) => {
   const like = {
     usuario_id: req.body.usuario_id,
@@ -367,7 +381,7 @@ app.post('/api/likes', (req, res) => {
   });
 });
 
-
+//eliminar un like
 app.delete('/api/likes/:usuario_id/:publicacion_id', (req, res) => {
   const usuario_id = req.params.usuario_id;
   const publicacion_id = req.params.publicacion_id;
